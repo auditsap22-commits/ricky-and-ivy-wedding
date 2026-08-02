@@ -10,7 +10,7 @@ export const siteConfig = {
     groom: "Ricardo Avelino III", //Ltryl B. Benitez
     groomNickname: "Ricky",
     monogram:"/monogram/monogram.webp" ,//Ltryl
-    // backgroundMusic:"/background_music/Panalangin (WITH TAB) Moonstar88  Fingerstyle Guitar Cover  Lyrics.mp3"
+    backgroundMusic:"/background_music/Palagi - TJ Monterde  Piano Cover with PIANO SHEET.mp3"
   },
   googleAPI:{
     messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSfo6UPOUXmYpyNPlzQJR9YxHsd4k-zGEQIy0E-0EK0M35qYmQ/formResponse",   //done

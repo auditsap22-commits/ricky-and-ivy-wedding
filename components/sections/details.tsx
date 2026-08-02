@@ -169,7 +169,7 @@ const attireGuide = {
         "#CD857D", // Light Blush
       ] as const,
       description:
-        "Any style of elegant formal dress or long gown in shades of blush pink. Pants, trousers, and jumpsuits are not permitted.",
+        "Any style of elegant formal dress or long gown in shades of blush pink.",
     },
     
     gentlemen: {
@@ -178,7 +178,7 @@ const attireGuide = {
         "#FFFFFF", // White Long Sleeve
       ] as const,
       description:
-        "Black suit coat, white long-sleeve dress shirt, black necktie, black dress pants, and black leather shoes. Only black suits and black pants are permitted.",
+        "Black suit coat, white long-sleeve dress shirt, black necktie, black dress pants, and black leather shoes.",
     },
   },
   guests2: {
@@ -216,6 +216,56 @@ function ColorPalette({ colors }: { colors: readonly string[] }) {
   )
 }
 
+function AttireEmphasis({ children }: { children: ReactNode }) {
+  return (
+    <span
+      className="mt-2.5 block rounded-lg border px-3 py-2.5 text-center text-[0.8125rem] font-semibold leading-snug sm:text-sm"
+      style={{
+        ...bodyFont,
+        color: detailText.heading,
+        borderColor: `color-mix(in srgb, ${ACCENT} 40%, white)`,
+        backgroundColor: `color-mix(in srgb, ${MOTIF.soft} 50%, white)`,
+      }}
+    >
+      {children}
+    </span>
+  )
+}
+
+function GuestLadiesAttireDescription() {
+  return (
+    <>
+      <span>
+        Ladies are respectfully requested to arrive in an elegant formal dress or long gown in
+        shades of blush pink.
+      </span>
+      <AttireEmphasis>
+        Please be advised:{" "}
+        <strong className="font-bold">pants, trousers, and jumpsuits are not permitted</strong>.
+        {" "}
+        <strong className="font-bold">White-colored attire is strictly prohibited</strong> and
+        reserved for the bridal party.
+      </AttireEmphasis>
+    </>
+  )
+}
+
+function GuestGentlemenAttireDescription() {
+  return (
+    <>
+      <span>
+        Gentlemen are respectfully requested to wear a black suit coat, white long-sleeve dress
+        shirt, black necktie, black dress pants, and black leather shoes.
+      </span>
+      <AttireEmphasis>
+        Only <strong className="font-bold">black suits and black dress pants</strong> are permitted.{" "}
+        <strong className="font-bold">White suits and all-white formal attire are strictly
+        prohibited</strong>.
+      </AttireEmphasis>
+    </>
+  )
+}
+
 function AttirePaletteGroup({
   label,
   colors,
@@ -223,7 +273,7 @@ function AttirePaletteGroup({
 }: {
   label: string
   colors: readonly string[]
-  description: string
+  description: ReactNode
 }) {
   return (
     <div className="space-y-2 sm:space-y-2.5">
@@ -892,12 +942,12 @@ export function Details() {
               <AttirePaletteGroup
                 label="Ladies"
                 colors={attireGuide.guests.ladies.colors}
-                description={attireGuide.guests.ladies.description}
+                description={<GuestLadiesAttireDescription />}
               />
               <AttirePaletteGroup
                 label="Gentlemen"
                 colors={attireGuide.guests.gentlemen.colors}
-                description={attireGuide.guests.gentlemen.description}
+                description={<GuestGentlemenAttireDescription />}
               />
             </div>
           </AttireCard>
@@ -1018,7 +1068,14 @@ export function Details() {
                     theme.
                   </p>
                   <ColorPalette colors={attireGuide.guests.ladies.colors} />
-                  <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
+                  <p>
+                    This is a strictly formal celebration. Casual attire and footwear are not
+                    permitted.{" "}
+                    <strong className="font-bold" style={{ color: detailText.heading }}>
+                      Pants, trousers, jumpsuits, and white-colored outfits are strictly prohibited
+                    </strong>{" "}
+                    for our guests.
+                  </p>
                 </div>
               </ReminderCard>
 

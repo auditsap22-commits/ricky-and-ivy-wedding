@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { StorySection } from "@/components/StorySection"
 import { Cinzel } from "next/font/google"
 
@@ -103,31 +102,26 @@ export function LoveStory() {
         <StorySection
           layout="image-left"
           isFirst={true}
-          title="You are Invited to Celebrate With Us"
+          title="Where It All Began"
           imageSrc="/mobile-background/coupless (12).webp"
           text={
-            <>
-              <p className="mb-4">
-                Some moments are meant to be shared with the people who matter most.
-              </p>
-              <p className="mb-4">
-                We&apos;re getting married on September 18, 2026, and we would be truly honored to have you there with us.
-              </p>
-            </>
+            <p className="mb-4">
+              Back in 2015, we were just two people sharing the same office space—Ricky working, and Ivy finishing her college OJT. What started as simple, everyday conversations turned into a quiet, beautiful connection.
+            </p>
           }
         />
 
         <StorySection
           layout="image-right"
+          title="Faith & Our Journey"
           imageSrc="/mobile-background/coupless (9).webp"
-          title="For Being Here With Us"
           text={
             <>
               <p className="mb-4">
-                Some celebrations are only truly complete with loved ones near.
+                When Ivy graduated a year later, our hearts were already sure, and we officially began our journey together. But among all the moments we shared during those courting days, the most precious was when Ricky shared his faith in God with Ivy. That moment didn&apos;t just change our relationship; it anchor-rooted our lives.
               </p>
               <p className="mb-4">
-                Whether you&apos;re traveling far or coming from just around the corner, your presence will make this day all the more meaningful.
+                Today, worshipping and serving together at Antioch Roadmap Church remains the heart of who we are.
               </p>
             </>
           }
@@ -135,85 +129,24 @@ export function LoveStory() {
 
         <StorySection
           layout="image-left"
+          title="Growing Together"
           imageSrc="/mobile-background/coupless (3).webp"
-          title="For the Love and Support"
           text={
-            <>
-              <p>
-                We would not be who we are without the people who lifted us along the way.
-              </p>
-              <p className="mb-4">
-                To our families and friends, thank you for your guidance, encouragement, and love that carried us to this moment.
-              </p>
-              <p className="mb-4">
-                Every kind word, every gesture of support, has shaped this day in ways words can hardly capture.
-              </p>
-            </>
+            <p className="mb-4">
+              Through every season since—building careers side-by-side in the life insurance business, supporting each other&apos;s biggest dreams, and learning what true partnership really means—we&apos;ve grown closer with every step.
+            </p>
           }
         />
 
         <StorySection
           layout="image-right"
-          imageSrc="/mobile-background/coupless (6).webp"
-          title="Becoming Family"
-          text={
-            <>
-              <p>
-                This day isn&apos;t just about the two of us—it&apos;s about all of us.
-              </p>
-              <p className="mb-4">
-                To both of our families coming together, thank you for welcoming us with open arms. We&apos;re honored to now call each other family.
-              </p>
-            </>
-          }
-        />
-
-        <StorySection
-          layout="image-left"
-          imageSrc="/mobile-background/coupless (10).webp"
-          title="Mark Your Calendars"
-          text={
-            <>
-              <p>
-                September 18, 2026, 2:00 PM, at the William Cameron Forbes Ballroom, Baguio Country Club—a day we&apos;ll always treasure.
-              </p>
-              <p className="mb-4">
-                We can&apos;t wait to celebrate this milestone surrounded by the people we love most—thank you for being one of them.
-              </p>
-            </>
-          }
-        />
-
-        <StorySection
-          layout="image-right"
-          imageSrc="/mobile-background/coupless (2).webp"
-          title="With Gratitude, Always"
-          text={
-            <>
-              <p>
-                Words can only say so much, but our gratitude runs deep.
-              </p>
-              <p className="mb-4">
-                Thank you for your love, your blessings, and for being part of our lives on this special day. We carry your presence with us always.
-              </p>
-            </>
-          }
-        />
-
-        <StorySection
-          layout="image-left"
           isLast={true}
+          title="Ready for Forever"
           imageSrc="/mobile-background/coupless (13).webp"
-          title="Thank You for Being Part of Our Family"
           text={
-            <>
-              <p>
-                Every celebration is made richer by the people who show up for it.
-              </p>
-              <p className="mb-4">
-                Thank you, from the bottom of our hearts, for being here, for your love, and for being part of our family.
-              </p>
-            </>
+            <p className="mb-4">
+              Now, with full hearts and God&apos;s grace leading the way, we&apos;re ready to start our forever.
+            </p>
           }
         />
         {/* <div className="relative z-0 px-4 pb-16 pt-8 text-center sm:pb-20 sm:pt-10 md:pb-24 md:pt-12">

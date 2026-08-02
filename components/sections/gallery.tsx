@@ -57,7 +57,6 @@ const ct = {
 } as const
 
 const galleryItems = [
-  { image: "/mobile-background/coupless (1).webp", text: " " },
   { image: "/mobile-background/coupless (2).webp", text: " " },
   { image: "/mobile-background/coupless (3).webp", text: " " },
   { image: "/mobile-background/coupless (4).webp", text: " " },
