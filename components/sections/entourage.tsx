@@ -5,12 +5,39 @@ import { useState, useEffect, useMemo, useRef } from "react"
 import { entourage as staticEntourage, principalSponsors as staticSponsors } from "@/content/site"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { Cinzel } from "next/font/google"
-import {
-  coastalLightBg,
-  coastalPalette,
-  coastalTitleShadow,
-  displayScript,
-} from "@/lib/coastal-palette"
+
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const NAME_SHADOW =
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
+
+const sectionWash = `linear-gradient(
+  180deg,
+  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
+), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -48,39 +75,32 @@ function principalSponsorFromApi(row: Record<string, unknown>): PrincipalSponsor
   }
 }
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-
-const BLUE_SHELL_FILTER =
-  `brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(612%) hue-rotate(152deg) brightness(95%) contrast(88%) drop-shadow(0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 55%, transparent))`
-
 const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 38%, transparent)`,
-  borderColor: "rgba(255, 255, 255, 0.62)",
-  boxShadow: `0 28px 72px color-mix(in srgb, ${coastalPalette.teal} 10%, transparent), 0 12px 32px color-mix(in srgb, ${coastalPalette.blueGray} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
+  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
+  boxShadow: `0 28px 72px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 12px 32px color-mix(in srgb, ${MOTIF.silver} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
 } as const
 
 const glassAmbientGlowStyle = {
-  background: `linear-gradient(135deg, color-mix(in srgb, ${coastalPalette.blueGray} 32%, transparent) 0%, color-mix(in srgb, ${coastalPalette.dustyRose} 22%, transparent) 48%, color-mix(in srgb, ${coastalPalette.teal} 18%, transparent) 100%)`,
+  background: `linear-gradient(135deg, color-mix(in srgb, ${MOTIF.silver} 32%, transparent) 0%, color-mix(in srgb, ${MOTIF.accent} 22%, transparent) 48%, color-mix(in srgb, ${MOTIF.deep} 18%, transparent) 100%)`,
 } as const
 
 const dividerLineStyle = {
-  background: `linear-gradient(to right, transparent, color-mix(in srgb, white 72%, ${coastalPalette.blueGray}), transparent)`,
+  background: `linear-gradient(to right, transparent, color-mix(in srgb, white 72%, ${MOTIF.silver}), transparent)`,
 } as const
 
-// Coastal palette — aligned with details / gallery sections
 const palette = {
-  body: coastalPalette.body,
-  heading: coastalPalette.deep,
-  label: coastalPalette.dustyRose,
-  accent: coastalPalette.title,
-  deep: coastalPalette.deep,
-  medium: coastalPalette.teal,
-  softBrown: coastalPalette.dustyRose,
-  background: coastalPalette.cream,
-  champagneGold: coastalPalette.blueGray,
-  champagneLight: coastalPalette.lavenderBlue,
-  sage: coastalPalette.teal,
+  body: TEXT,
+  heading: TEXT_DEEP,
+  label: ACCENT,
+  accent: NAME_COLOR,
+  deep: TEXT_DEEP,
+  medium: ACCENT,
+  softBrown: ACCENT,
+  background: MOTIF.cream,
+  champagneGold: MOTIF.silver,
+  champagneLight: MOTIF.soft,
+  sage: ACCENT,
 } as const
 
 const bodyFont: React.CSSProperties = {
@@ -413,37 +433,28 @@ export function Entourage() {
   }
 
   return (
-    <div className="relative w-full" style={{ backgroundColor: coastalLightBg }}>
+    <div className="relative isolate w-full overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
+        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: sectionWash }}
+        aria-hidden
+      />
+
       <section
         ref={sectionRef}
         id="entourage"
         className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 overflow-hidden"
       >
-        {/* Shell corner decorations */}
-        <div className="pointer-events-none absolute left-0 top-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/top-left-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 right-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/right-bottom-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
-
       {/* Section Header */}
       <div className={`relative z-20 text-center mb-6 sm:mb-8 md:mb-10 px-6 sm:px-10 md:px-12 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
         <p
           className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] sm:tracking-[0.24em] mb-2`}
-          style={{ color: coastalPalette.dustyRose }}
+          style={{ color: ACCENT }}
         >
           With {siteConfig.couple.groomNickname} &amp; {siteConfig.couple.brideNickname}
         </p>
@@ -453,9 +464,9 @@ export function Entourage() {
           style={{
             ...displayScript,
             fontSize: "clamp(1.55rem, 4.1vw + 0.65rem, 4.25rem)",
-            color: coastalPalette.title,
+            color: NAME_COLOR,
             letterSpacing: "0.02em",
-            textShadow: coastalTitleShadow,
+            textShadow: NAME_SHADOW,
           }}
         >
           Wedding Entourage
@@ -463,7 +474,7 @@ export function Entourage() {
 
         <p
           className={`${ct.bodyLg} max-w-xl mx-auto leading-relaxed italic px-2`}
-          style={{ ...bodyFont, color: coastalPalette.body }}
+          style={{ ...bodyFont, color: TEXT }}
         >
           Honoring those who stand with us on our special day
         </p>
@@ -471,7 +482,7 @@ export function Entourage() {
         <div className="flex items-center justify-center pt-2 sm:pt-3">
           <span
             className="h-px w-16 sm:w-24 md:w-32"
-            style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+            style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)` }}
           />
         </div>
       </div>
@@ -499,7 +510,7 @@ export function Entourage() {
             <div
               className="pointer-events-none absolute inset-0"
               style={{
-                background: `linear-gradient(to top, color-mix(in srgb, ${coastalPalette.blueGray} 10%, transparent), transparent 45%)`,
+                background: `linear-gradient(to top, color-mix(in srgb, ${MOTIF.silver} 10%, transparent), transparent 45%)`,
               }}
               aria-hidden
             />

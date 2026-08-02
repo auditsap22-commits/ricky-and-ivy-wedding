@@ -117,15 +117,15 @@
   --font-serif: "Great Vibes", "Great Vibes Fallback";
 
   /* ─── Motif palette — edit here, affects every component ─── */
-  --color-motif-cream:   #FFF6E9; /* Soft Blush Peach */
-  --color-motif-yellow:  #DFCFD0; /* Dusty Rose Gray */
-
-  --color-motif-soft:    #DDE1ED; /* Misty Blue */
-  --color-motif-accent:  #94B8C8; /* Powder Blue */
-
-  --color-motif-deep:    #94B8C8; /* Primary Accent */
-  --color-motif-medium:  #C0D0DD; /* Soft Sky Blue */
-  --color-motif-silver:  #DFCFD0; /* Elegant Neutral */
+  --color-motif-cream:    #FFF8F8; /* Soft Ivory */
+  --color-motif-yellow:   #F7DDE2; /* Light Blush */
+  
+  --color-motif-soft:     #FBECEF; /* Rose Mist */
+  --color-motif-accent:   #E8AEBE; /* Blush Pink */
+  
+  --color-motif-deep:     #D98CA4; /* Dusty Rose */
+  --color-motif-medium:   #F2C7D3; /* Soft Pink */
+  --color-motif-silver:   #EAD9DE; /* Warm Rose Gray */
   /* ─────────────────────────────────────────────────────────── */
   --font-imperial-script: "Imperial Script", cursive;
   --color-background: var(--background);

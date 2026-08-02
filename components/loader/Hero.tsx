@@ -9,35 +9,38 @@ interface HeroProps {
   visible: boolean;
 }
 
-const SEA_WAVES_VIDEO = '/background_music/Sea%20Waves%20-%20Sound%20Effect.mp4';
+const SEA_WAVES_VIDEO = '/background_music/Blooming Pink Flower Free Background Videos, Motion Graphics, No Copyright  All Background Videos.mp4';
 
-// Shared beach pastel palette — matches LoadingScreen
-const PALETTE = {
-  cream: '#F1EDE2',
-  sand: '#E8D5C4',
-  seafoam: '#AFC8E6',
-  sky: '#B8D4E3',
-  blush: '#D8B0B0',
-  coral: '#C98B8B',
-  peach: '#E8C4B8',
-  shell: '#F5E6DC',
-  aqua: '#9EC5D4',
-  mist: '#D4E8EF',
-} as const;
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: '#FFF8F8',
+  lightBlush: '#F7DDE2',
+  soft: '#FBECEF',
+  accent: '#E8AEBE',
+  deep: '#D98CA4',
+  medium: '#F2C7D3',
+  silver: '#EAD9DE',
+} as const
 
+const ACCENT = MOTIF.deep
+const NAME_COLOR = '#C97A94'
 
-const NAME_COLOR = '#6A9BB8';
+const NAME_SHADOW =
+  '0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)'
+
+const MONOGRAM_FILTER =
+  'brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(950%) hue-rotate(298deg) brightness(96%) contrast(92%) drop-shadow(0 8px 22px rgba(232, 174, 190, 0.65))'
 
 const LOADING_RADIAL_OVERLAY =
-  'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.22) 52%, rgba(255, 255, 255, 0.1) 100%)';
+  'radial-gradient(ellipse at center, rgba(255,248,248,0.58) 0%, rgba(251,236,239,0.32) 48%, rgba(232,174,190,0.14) 100%)'
 
 const LOADING_PASTEL_WASH = `
-  radial-gradient(circle at 14% 18%, ${PALETTE.seafoam}28 0%, transparent 40%),
-  radial-gradient(circle at 86% 14%, ${PALETTE.blush}24 0%, transparent 38%),
-  radial-gradient(circle at 78% 82%, ${PALETTE.peach}22 0%, transparent 42%),
-  radial-gradient(circle at 20% 78%, ${PALETTE.mist}30 0%, transparent 38%),
-  radial-gradient(circle at 50% 50%, ${PALETTE.sand}20 0%, transparent 52%)
-`;
+  radial-gradient(circle at 14% 18%, ${MOTIF.lightBlush}30 0%, transparent 40%),
+  radial-gradient(circle at 86% 14%, ${MOTIF.accent}28 0%, transparent 38%),
+  radial-gradient(circle at 78% 82%, ${MOTIF.medium}24 0%, transparent 42%),
+  radial-gradient(circle at 20% 78%, ${MOTIF.soft}32 0%, transparent 38%),
+  radial-gradient(circle at 50% 50%, ${MOTIF.cream}22 0%, transparent 52%)
+`
 
 export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
   const siteConfig = useSiteConfig();
@@ -110,14 +113,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
           aria-hidden
         />
 
-        {/* Soft bottom lift for hero copy — cream/mist from LoadingScreen palette */}
+        {/* Soft bottom lift for hero copy — motif cream / rose mist */}
         <div
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background: `linear-gradient(
               to top,
-              ${PALETTE.cream}B8 0%,
-              ${PALETTE.mist}59 34%,
+              ${MOTIF.cream}D9 0%,
+              ${MOTIF.soft}70 34%,
               transparent 62%
             )`,
           }}
@@ -149,8 +152,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
                 className="object-contain"
                 priority
                 style={{
-                  filter:
-                    'brightness(0) saturate(100%) invert(100%) drop-shadow(0 8px 22px rgba(175, 200, 230, 0.75))',
+                  filter: MONOGRAM_FILTER,
                 }}
               />
             </div>
@@ -167,9 +169,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
             style={{
               fontFamily: '"Great Vibes", cursive',
               fontWeight: 400,
-              color: '#FFFFFF',
-              textShadow:
-                '0 2px 8px rgba(45, 67, 79, 0.35), 0 0 20px rgba(175, 200, 230, 0.45)',
+              color: NAME_COLOR,
+              textShadow: NAME_SHADOW,
             }}
           >
             You are
@@ -180,11 +181,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
               contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{
-              fontFamily: '"Cinzel", serif',
+              fontFamily: 'var(--font-cinzel, "Cinzel"), serif',
               fontWeight: 700,
-              color: '#FFFFFF',
-              textShadow:
-                '0 2px 8px rgba(45, 67, 79, 0.35), 0 0 20px rgba(175, 200, 230, 0.45)',
+              color: ACCENT,
+              textShadow: NAME_SHADOW,
               letterSpacing: '0.05em',
             }}
           >
@@ -199,26 +199,26 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
               contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{
-              backgroundColor: NAME_COLOR,
-              borderColor: PALETTE.sky,
-              color: PALETTE.cream,
+              backgroundColor: ACCENT,
+              borderColor: MOTIF.medium,
+              color: MOTIF.cream,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = PALETTE.seafoam;
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.borderColor = PALETTE.cream;
+              e.currentTarget.style.backgroundColor = MOTIF.accent
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.borderColor = MOTIF.silver
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = NAME_COLOR;
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.borderColor = PALETTE.sky;
+              e.currentTarget.style.backgroundColor = ACCENT
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.borderColor = MOTIF.medium
             }}
           >
             <span
               style={{
-                fontFamily: '"Cinzel", serif',
+                fontFamily: 'var(--font-cinzel, "Cinzel"), serif',
                 fontWeight: 500,
-                color: PALETTE.cream,
+                color: MOTIF.cream,
                 letterSpacing: '0.18em',
               }}
             >

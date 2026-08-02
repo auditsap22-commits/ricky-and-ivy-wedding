@@ -5,30 +5,30 @@ import {
 
 export const siteConfig = {
   couple: {
-    bride: "Denise Allison Cada", //Noenyl Bryle M. Gonzaga
-    brideNickname: "Denise", //Ltryl
-    groom: "Mark Biong", //Ltryl B. Benitez
-    groomNickname: "Mark",
-    monogram:"/monogram/monogram-new.png" ,//Ltryl
-    backgroundMusic:"/background_music/Panalangin (WITH TAB) Moonstar88  Fingerstyle Guitar Cover  Lyrics.mp3"
+    bride: "Ivy Paras", //Noenyl Bryle M. Gonzaga
+    brideNickname: "Ivy", //Ltryl
+    groom: "Ricardo Avelino III", //Ltryl B. Benitez
+    groomNickname: "Ricky",
+    monogram:"/monogram/monogram.webp" ,//Ltryl
+    // backgroundMusic:"/background_music/Panalangin (WITH TAB) Moonstar88  Fingerstyle Guitar Cover  Lyrics.mp3"
   },
   googleAPI:{
-    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSe-BGG96Vmw0EW7pffjhWUnXPLCE2cPT7QZLy4p9x9NK890Bw/formResponse",   //done
-    message: "https://script.google.com/macros/s/AKfycby8lqt6d3bE1mpXq7ggymZ4LsHTdu5GZ6zu3TzbfdfVn_XOJ8L6I_5JeCV3aHEZp3z6/exec",  //done
-    guestList: "https://script.google.com/macros/s/AKfycbyBjQh6nIbOwqBkHe0_v9GvGOBInzs8SyE2inZHyUUO1DZMC_CgkRABVaaEHuWQFrjj/exec",  //done
-    guestRequest: "https://script.google.com/macros/s/AKfycbxm-PwFLbaBLvWPX8fRYL6-enzyqOO-2IW8TUb2DZx64l_vrWTwi1wlD0xUudYIFSc/exec",   //done
-    entourage: "https://script.google.com/macros/s/AKfycbxDOKE0Vfc8YX_BuXvVrzJ6mP-tCSpLJnHbCVBbG1v9blZ6UqlrhNnXZ-mqKT4iXUtx/exec",  //done
-    sponsors: "https://script.google.com/macros/s/AKfycbzUqYZ4Ez0gn__Smht7BC3QfMABAx9aMGSvYCGp2svzSXbGs4tsSpNB6LHLgU5awB1w/exec",  //done 
-    proposalResponses: "https://script.google.com/macros/s/AKfycbw4sSBs5sR99p7hHNPsUQru6MksPmrppUXUDMhK3zlQ1jXU7UZ3BmGK1KrsgT9qcZCe/exec", // uses entourage script with action: proposal
-    weddingDetails: "https://script.google.com/macros/s/AKfycbwZQqnKSrcLu_vc6ATF_Tcd2xvw_vYSsf4NqRId_Mjk8h6EIDtKRHdQaBmTF1vMmO57/exec",   //done
+    messageForm: "https://docs.google.com/forms/d/e/1FAIpQLSfo6UPOUXmYpyNPlzQJR9YxHsd4k-zGEQIy0E-0EK0M35qYmQ/formResponse",   //done
+    message: "https://script.google.com/macros/s/AKfycbxWAPbbd1XmBKOeF5sb5Wpzalr-RhEdJNUFS2ISuAuXsVpVKWeDjkYS9GUMc8UomSTjag/exec",  //done
+    guestList: "https://script.google.com/macros/s/AKfycbzxK1YHV8a_51Lb4U-EVw2PF7Ky-Zs1iYzVjcxd4zzOsovjQGl8KBjpCifGJUzG1Ls0Dg/exec",  //done
+    guestRequest: "https://script.google.com/macros/s/AKfycbxgV0zwVQHVxFi57KsU4D0nHbx-bKBMbX_b4hm0DDxihgC28dkdWIwr2WbXZZS9gTi3yQ/exec",   //done
+    entourage: "https://script.google.com/macros/s/AKfycbymxyTdR9cEX13OdccciZk77E9iEQ5hnFk-tQL0Nx9KnJ4I52JsbD1jna2bNA5CxI3ajQ/exec",  //done
+    sponsors: "https://script.google.com/macros/s/AKfycbxERf7mmECnnmhHpGzHIOrb_r-5iCx8DnIptP576GTCN44RaYf_Zk5PcKEEYVft5GPGqQ/exec",  //done 
+    proposalResponses: "https://script.google.com/macros/s/AKfycbwIUDKMoMIHVwbmr6KbgmBtlGRpMGj1Z9maeHSEwsFaXNi0dAH8WYhqbtiAfg_p5D4lgw/exec", // uses entourage script with action: proposal
+    weddingDetails: "https://script.google.com/macros/s/AKfycbyjpkWVGzI2hH3-G16yzwAWkn1nAD3FeJppj5qUIVsaT_Llm-OMygKBvyxGNwp2lDonVQ/exec",   //done
 ////google share 
-    googleShare: "https://docs.google.com/spreadsheets/d/1LzwyRloGBdhylHiOTwjakkbWqLp8jFmmVLfdTJA8OJs/edit?usp=sharing", 
+    googleShare: "https://docs.google.com/spreadsheets/d/13MuzlfexKPktPMEypjIVucqsOE-BgXuAuwLMrKu-dxA/edit?usp=sharing", 
   },
   wedding: {
-    date: "August 26, 2026",
-    time: "3:00 PM",
-    venue: "St. Anthony of Padua Parish",
-    tagline: "are getting married!",
+    date: "September 18, 2026",
+    time: "2:00 PM",
+    venue: "William Cameron Forbes Ballroom, Baguio Country Club",
+    tagline: "are getting married!!!!!",
     theme: "Our wedding palette is inspired by timeless elegance and warmth.Motif Colors: Champagne Gold, Soft Beige, Warm Soft Brown",
     motif: "#BBCED5, #B9C3A8, #F3D8C5, #D1C4D4, #ECD8BA, #F4E8D8, #E1DCCF",
   },
@@ -40,49 +40,55 @@ export const siteConfig = {
   },
   details: {
     rsvp: {
-      deadline: "August 1, 2026",
-      coordinator: "Trixie Castillo",
-      phone: "0965 490 6240",
+      deadline: "August 10, 2026",
+      coordinator: "to be announced",
+      phone: "​",
     },
   },
   contact: {
-    bridePhone: "+63 956 482 5255",
-    groomPhone: "",
-    email: "",
+    bridePhone: "to be announced",
+    groomPhone: "to be announced",
+    email: "to be announced",
   },
   giftRegistry: {
     QR_1:{
     id: "BPI",
-    src: "/monogram/BPI.png",
+    src: "/QR/BPI.png",
     label: "BPI",
-    accountNumber: "TE*I NI***E A GU******O",
+    accountNumber: "855-932-0086",
     },
     QR_2:{
-    id: "Zelle",
-    src: "/monogram/Zelle.png",
-    label: "Zelle",
-    accountNumber: "Patrick: xxx-xxx-0009",
+    id: "Gotyme bank",
+    src: "/QR/GOtyme.png",
+    label: "Gotyme bank",
+    accountNumber: "012-575-268-565",
+    },
+    QR_3:{
+    id: "Gcash",
+    src: "/QR/Gcash.png",
+    label: "Gcash",
+    accountNumber: "0916 4910 502 ",
     }
   },
   ceremony: {
-    location: "St. Anthony of Padua Parish",
-    venue: "Sulangan, Guiuan, Eastern Samar",
-    map: "https://maps.app.goo.gl/tcGfBAeEvJQ6pPzF7",
-    date: "August 26, 2026",
-    day: "Wednesday",
-    time: "3:00 PM",
-    entourageTime: "2:00 PM",
-    guestsTime: "2:30 PM",
-    image: ["/Details/ceremony.png", "/Details/ceremony.png"],
+    location: "William Cameron Forbes Ballroom, Baguio Country Club",
+    venue: "Country Club Rd, Baguio, 2600 Benguet",
+    map: "https://maps.app.goo.gl/R5Rj6rnpRfHFMT6C8",
+    date: "September 18, 2026",
+    day: "Friday",
+    time: "2:00 PM",
+    entourageTime: "1:00 PM",
+    guestsTime: "1:30 PM",
+    image: ["/Details/ceremony.png", "/Details/ceremony2.png"],
   },
   reception: {
-    location: "Baybayon Ni Tata Joven",
-    venue: "Brgy. Ngolos, Guiuan, Eastern Samar ",
-    map: "https://maps.app.goo.gl/LBsKoJMUGNVwKSqK8",
-    date: "October 4, 2026",
-    day: "Wednesday",
+    location: "William Cameron Forbes Ballroom, Baguio Country Club",
+    venue: "Country Club Rd, Baguio, 2600 Benguet",
+    map: "https://maps.app.goo.gl/R5Rj6rnpRfHFMT6C8",
+    date: "September 18, 2026",
+    day: "Friday",
     time: "6:00 PM",
-    image: ["/Details/reception.png", "/Details/reception.png"],
+    image: ["/Details/reception.webp", "/Details/reception2.webp"],
   },
   dressCode: {
       theme: "SEMI-FORMAL",
@@ -134,17 +140,17 @@ Now, as they prepare to say yes before God and the people they love most, Cather
   playlist: {
     title: "A Playlist from our hearts",
     subtitle: "Songs that have been part of our journey together",
-    playlistName: "Mark & Denise Wedding",
+    playlistName: "Rick and Ivy Wedding",
     embedUrl:
-    //"https://open.spotify.com/embed/playlist/5Byw7lVriAOsOFOQ7A3hE6?utm_source=generator&si=2252feb4ea514014
-      "https://open.spotify.com/embed/playlist/5Byw7lVriAOsOFOQ7A3hE6?utm_source=generator&si=2252feb4ea514014",
-    spotifyUrl: "https://open.spotify.com/playlist/5Byw7lVriAOsOFOQ7A3hE6",
+    //https://open.spotify.com/embed/playlist/4hTYU4yUVvk0MO77XxA5ri?utm_source=generator&si=d4e0d403f7eb4b2f
+      "https://open.spotify.com/embed/playlist/4hTYU4yUVvk0MO77XxA5ri?utm_source=generator&theme=0&si=d4e0d403f7eb4b2f",
+    spotifyUrl: "https://open.spotify.com/playlist/4hTYU4yUVvk0MO77XxA5ri",
   },
   snapShare: {
     googleDriveLink:
-      "https://drive.google.com/drive/folders/1fH_NKSGFyW1DupwtElpS-cZIldXJ3280?usp=sharing",
+    "https://drive.google.com/drive/folders/1NH9K08-UV8N7bEpQwkiB2J3MreAf6lMa?usp=sharing",
     albumQR: "/QR/AlbumQR.png",
-    hashtag: ["#BIONGgaCADAy"],
+    hashtag: ["#RICKYandIVYWedding"],
     instructions: "Please scan this QR Code and upload the photos and videos you have taken during our wedding reception. We are delighted to see your snaps too!",
   },
   accommodation: {

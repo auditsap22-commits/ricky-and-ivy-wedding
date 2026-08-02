@@ -5,31 +5,52 @@ import type { SiteConfig } from "@/lib/site-config"
 import { ChevronDown } from "lucide-react"
 import { Cinzel } from "next/font/google"
 import { useSiteConfig } from "@/hooks/use-site-config"
-import {
-  coastalLightBg,
-  coastalPalette,
-  coastalTitleShadow,
-  displayScript,
-} from "@/lib/coastal-palette"
+
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const NAME_SHADOW =
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
+
+const sectionWash = `linear-gradient(
+  180deg,
+  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
+), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "600"],
 })
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-
-const BLUE_SHELL_FILTER =
-  `brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(612%) hue-rotate(152deg) brightness(95%) contrast(88%) drop-shadow(0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 55%, transparent))`
-
 const palette = {
-  body: coastalPalette.body,
-  heading: coastalPalette.deep,
-  label: coastalPalette.dustyRose,
-  accent: coastalPalette.title,
-  deep: coastalPalette.deep,
-  cream: coastalPalette.cream,
+  body: TEXT,
+  heading: TEXT_DEEP,
+  label: ACCENT,
+  accent: NAME_COLOR,
+  deep: TEXT_DEEP,
+  cream: MOTIF.cream,
 } as const
 
 const bodyFont: React.CSSProperties = {
@@ -47,13 +68,13 @@ const linkClass =
   "underline font-semibold transition-colors hover:opacity-80"
 
 const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 38%, transparent)`,
-  borderColor: "rgba(255, 255, 255, 0.62)",
-  boxShadow: `0 28px 72px color-mix(in srgb, ${coastalPalette.teal} 10%, transparent), 0 12px 32px color-mix(in srgb, ${coastalPalette.blueGray} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
+  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
+  boxShadow: `0 28px 72px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 12px 32px color-mix(in srgb, ${MOTIF.silver} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
 } as const
 
 const glassAmbientGlowStyle = {
-  background: `linear-gradient(135deg, color-mix(in srgb, ${coastalPalette.blueGray} 32%, transparent) 0%, color-mix(in srgb, ${coastalPalette.dustyRose} 22%, transparent) 48%, color-mix(in srgb, ${coastalPalette.teal} 18%, transparent) 100%)`,
+  background: `linear-gradient(135deg, color-mix(in srgb, ${MOTIF.silver} 32%, transparent) 0%, color-mix(in srgb, ${MOTIF.accent} 22%, transparent) 48%, color-mix(in srgb, ${MOTIF.deep} 18%, transparent) 100%)`,
 } as const
 
 interface FAQItem {
@@ -248,36 +269,27 @@ export function FAQ() {
   }
 
   return (
-    <section
-      id="faq"
-      className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 isolate overflow-hidden"
-      style={{ backgroundColor: coastalLightBg }}
-    >
-      {/* Shell corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 z-[1]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/decoration/top-left-shell-deco.png"
-          alt=""
-          className={CORNER_DECO_CLASS}
-          style={{ filter: BLUE_SHELL_FILTER }}
-        />
-      </div>
-      <div className="pointer-events-none absolute bottom-0 right-0 z-[1]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/decoration/right-bottom-shell-deco.png"
-          alt=""
-          className={CORNER_DECO_CLASS}
-          style={{ filter: BLUE_SHELL_FILTER }}
-        />
-      </div>
+    <div className="relative isolate w-full overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
+        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: sectionWash }}
+        aria-hidden
+      />
 
+      <section
+        id="faq"
+        className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 isolate overflow-hidden"
+      >
       {/* Header */}
       <div className="relative z-20 text-center mb-6 sm:mb-8 md:mb-10 px-6 sm:px-10 md:px-12">
         <p
           className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] sm:tracking-[0.24em] mb-2`}
-          style={{ color: coastalPalette.dustyRose }}
+          style={{ color: ACCENT }}
         >
           For {coupleDisplayName}
         </p>
@@ -286,23 +298,23 @@ export function FAQ() {
           style={{
             ...displayScript,
             fontSize: "clamp(1.35rem, 3.2vw + 0.5rem, 4.25rem)",
-            color: coastalPalette.title,
+            color: NAME_COLOR,
             letterSpacing: "0.02em",
-            textShadow: coastalTitleShadow,
+            textShadow: NAME_SHADOW,
           }}
         >
           Frequently Asked Questions
         </h2>
         <p
           className={`${ct.bodyLg} max-w-2xl mx-auto leading-relaxed px-2`}
-          style={{ ...bodyFont, color: coastalPalette.body }}
+          style={{ ...bodyFont, color: TEXT }}
         >
           Helpful notes so you can simply arrive, celebrate, and enjoy this new chapter with us.
         </p>
         <div className="flex items-center justify-center pt-2 sm:pt-3">
           <span
             className="h-px w-16 sm:w-24 md:w-32"
-            style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+            style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)` }}
           />
         </div>
       </div>
@@ -335,18 +347,18 @@ export function FAQ() {
                     className="relative z-20 rounded-xl border transition-all duration-300"
                     style={{
                       borderColor: isOpen
-                        ? `color-mix(in srgb, ${coastalPalette.teal} 35%, white)`
-                        : `color-mix(in srgb, ${coastalPalette.blueGray} 30%, white)`,
-                      backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 42%, white)`,
+                        ? `color-mix(in srgb, ${ACCENT} 35%, white)`
+                        : `color-mix(in srgb, ${MOTIF.silver} 30%, white)`,
+                      backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, white)`,
                       boxShadow: isOpen
-                        ? `0 4px 16px color-mix(in srgb, ${coastalPalette.teal} 8%, transparent)`
+                        ? `0 4px 16px color-mix(in srgb, ${ACCENT} 8%, transparent)`
                         : "none",
                     }}
                   >
                     <button
                       onClick={() => toggleItem(index)}
                       className="group w-full px-3 sm:px-4 md:px-5 py-2.5 sm:py-3 flex items-center justify-between text-left outline-none transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                      style={{ outlineColor: coastalPalette.teal }}
+                      style={{ outlineColor: ACCENT }}
                       aria-expanded={isOpen}
                       aria-controls={contentId}
                     >
@@ -374,7 +386,7 @@ export function FAQ() {
                       <div className="overflow-hidden">
                         <div
                           className="px-3 sm:px-4 md:px-5 pb-3 sm:pb-4 pt-0 border-t"
-                          style={{ borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 25%, white)` }}
+                          style={{ borderColor: `color-mix(in srgb, ${MOTIF.silver} 25%, white)` }}
                         >
                           <FaqAnswer answer={item.answer} />
                         </div>
@@ -388,5 +400,6 @@ export function FAQ() {
         </div>
       </div>
     </section>
+    </div>
   )
 }

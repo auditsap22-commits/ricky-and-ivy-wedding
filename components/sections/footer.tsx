@@ -6,32 +6,52 @@ import { Instagram, Twitter, Facebook, Music2 } from "lucide-react"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { Cinzel } from "next/font/google"
 import Image from "next/image"
-import {
-  coastalLightBg,
-  coastalPalette,
-  displayScript,
-} from "@/lib/coastal-palette"
 
-const FOOTER_MONOGRAM_COLOR = "#94B8C8"
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const NAME_SHADOW =
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
+
+const sectionWash = `linear-gradient(
+  180deg,
+  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
+), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "600"],
 })
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-
-const BLUE_SHELL_FILTER =
-  `brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(612%) hue-rotate(152deg) brightness(95%) contrast(88%) drop-shadow(0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 55%, transparent))`
-
 const palette = {
-  body: coastalPalette.body,
-  heading: coastalPalette.deep,
-  label: coastalPalette.dustyRose,
-  accent: coastalPalette.title,
-  deep: coastalPalette.deep,
-  cream: coastalPalette.cream,
+  body: TEXT,
+  heading: TEXT_DEEP,
+  label: ACCENT,
+  accent: NAME_COLOR,
+  deep: TEXT_DEEP,
+  cream: MOTIF.cream,
 } as const
 
 const bodyFont: React.CSSProperties = {
@@ -60,11 +80,11 @@ const toTitleCase = (str: string) =>
     .join(" ")
 
 const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 38%, transparent)`,
+  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: `color-mix(in srgb, white 72%, ${coastalPalette.blueGray})`,
-  boxShadow: `0 20px 48px color-mix(in srgb, ${coastalPalette.teal} 10%, transparent), 0 8px 24px color-mix(in srgb, ${coastalPalette.blueGray} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.82)`,
+  borderColor: `color-mix(in srgb, white 72%, ${MOTIF.silver})`,
+  boxShadow: `0 20px 48px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 8px 24px color-mix(in srgb, ${MOTIF.silver} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 function FooterCard({
@@ -182,28 +202,19 @@ export function Footer() {
   )
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ backgroundColor: coastalLightBg }}>
-      <footer className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14">
-        {/* Shell corner decorations */}
-        <div className="pointer-events-none absolute left-0 top-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/top-left-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 right-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/right-bottom-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
+    <div className="relative isolate w-full overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
+        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: sectionWash }}
+        aria-hidden
+      />
 
+      <footer className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14">
         {/* Monogram + couple header */}
         <div className="relative z-10 flex flex-col items-center mb-6 sm:mb-8 md:mb-10 px-6 sm:px-10">
           <motion.div
@@ -230,9 +241,9 @@ export function Footer() {
               style={{
                 ...displayScript,
                 fontSize: "clamp(2rem, 6.5vw, 3.5rem)",
-                color: FOOTER_MONOGRAM_COLOR,
+                color: NAME_COLOR,
                 letterSpacing: "0.03em",
-                textShadow: `0 2px 12px color-mix(in srgb, ${FOOTER_MONOGRAM_COLOR} 45%, transparent)`,
+                textShadow: NAME_SHADOW,
               }}
             >
               {coupleDisplayName}
@@ -241,9 +252,8 @@ export function Footer() {
               className={`${ct.bodyLg} mt-2 sm:mt-3 italic`}
               style={{
                 ...bodyFont,
-                color: FOOTER_MONOGRAM_COLOR,
+                color: ACCENT,
                 letterSpacing: "0.04em",
-                textShadow: `0 1px 8px color-mix(in srgb, ${FOOTER_MONOGRAM_COLOR} 35%, transparent)`,
               }}
             >
               {ceremonyDate}
@@ -253,7 +263,7 @@ export function Footer() {
           <div className="flex items-center justify-center pt-3 sm:pt-4">
             <span
               className="h-px w-16 sm:w-24 md:w-32"
-              style={{ backgroundColor: `color-mix(in srgb, ${FOOTER_MONOGRAM_COLOR} 65%, white)` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)` }}
             />
           </div>
         </div>
@@ -294,7 +304,7 @@ export function Footer() {
                   &ldquo;{displayedText}
                   <span
                     className="inline-block w-0.5 h-4 sm:h-5 ml-1 animate-pulse align-middle"
-                    style={{ backgroundColor: coastalPalette.teal }}
+                    style={{ backgroundColor: ACCENT }}
                   />
                   &rdquo;
                 </blockquote>
@@ -320,7 +330,7 @@ export function Footer() {
                   className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
                   style={{ color: palette.heading }}
                 >
-                  Ceremony
+                  Ceremony & Reception
                 </h4>
                 <div className="space-y-3">
                   <DetailRow label="Venue" value={toTitleCase(ceremonyVenue)} />
@@ -331,7 +341,7 @@ export function Footer() {
                 </div>
               </FooterCard>
 
-              <FooterCard>
+              {/* <FooterCard>
                 <h4
                   className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`}
                   style={{ color: palette.heading }}
@@ -345,7 +355,7 @@ export function Footer() {
                   )}
                   <DetailRow label="Time" value={receptionTime} />
                 </div>
-              </FooterCard>
+              </FooterCard> */}
 
               <FooterCard>
                 <h4 className={`${cinzel.className} ${ct.cardTitle} font-semibold mb-3`} style={{ color: palette.heading }}>
@@ -369,7 +379,7 @@ export function Footer() {
                 >
                   <span
                     className="w-1.5 h-6 sm:h-7 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: coastalPalette.teal }}
+                    style={{ backgroundColor: ACCENT }}
                   />
                   Follow Us
                 </h4>
@@ -391,10 +401,10 @@ export function Footer() {
                       style={{
                         borderWidth: "1px",
                         borderStyle: "solid",
-                        borderColor: `color-mix(in srgb, white 65%, ${coastalPalette.blueGray})`,
-                        backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 45%, transparent)`,
-                        color: coastalPalette.teal,
-                        boxShadow: `0 4px 12px color-mix(in srgb, ${coastalPalette.blueGray} 12%, transparent)`,
+                        borderColor: `color-mix(in srgb, white 65%, ${MOTIF.silver})`,
+                        backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 45%, transparent)`,
+                        color: ACCENT,
+                        boxShadow: `0 4px 12px color-mix(in srgb, ${MOTIF.silver} 12%, transparent)`,
                       }}
                       aria-label={label}
                     >
@@ -430,7 +440,7 @@ export function Footer() {
           {/* Bottom bar */}
           <motion.div
             className="pt-6 sm:pt-8 border-t"
-            style={{ borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 35%, white)` }}
+            style={{ borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)` }}
             variants={fadeInUp}
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">

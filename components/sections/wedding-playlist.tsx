@@ -5,10 +5,31 @@ import { Section } from "@/components/section"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { useAudio } from "@/contexts/audio-context"
 import { Cinzel } from "next/font/google"
-import {
-  coastalPalette,
-  displayScript,
-} from "@/lib/coastal-palette"
+
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const ACCENT = MOTIF.deep
+
+const OUTSIDE_TEXT = MOTIF.cream
+const OUTSIDE_TEXT_MUTED = "rgba(255, 252, 248, 0.88)"
+const OUTSIDE_LABEL = "rgba(255, 252, 248, 0.72)"
+const OUTSIDE_TITLE_SHADOW =
+  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 interface SpotifyPlaybackUpdate {
   playingURI: string
@@ -40,7 +61,7 @@ interface SpotifyIframeApi {
 
 declare global {
   interface Window {
-    onSpotifyIframeApiReady?: (IFrameAPI: SpotifyIframeApi) => void
+    onSpotifyIframeApiReady?: (api: SpotifyIframeApi) => void
   }
 }
 
@@ -88,14 +109,6 @@ const cinzel = Cinzel({
   weight: ["400", "600"],
 })
 
-const OUTSIDE_TEXT = coastalPalette.cream
-const OUTSIDE_TEXT_MUTED = "rgba(255, 252, 248, 0.88)"
-const OUTSIDE_LABEL = "rgba(255, 252, 248, 0.72)"
-const OUTSIDE_TITLE_SHADOW =
-  "0 2px 6px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 0, 0, 0.12)"
-
-const BUTTON_COLOR = "#FBCFC6"
-
 const bodyFont: React.CSSProperties = {
   fontFamily: "'SortsMillGoudy', Georgia, serif",
 }
@@ -106,15 +119,16 @@ const ct = {
   btn: "text-xs sm:text-sm md:text-base",
 } as const
 
-const cardStyle = {
+const containerStyle = {
   background: `linear-gradient(
     155deg,
-    color-mix(in srgb, ${coastalPalette.peach} 88%, white) 0%,
-    color-mix(in srgb, ${coastalPalette.lavenderBlue} 92%, white) 50%,
-    color-mix(in srgb, ${coastalPalette.blueGray} 55%, white) 100%
+    color-mix(in srgb, ${MOTIF.cream} 96%, white) 0%,
+    color-mix(in srgb, ${MOTIF.soft} 92%, white) 42%,
+    color-mix(in srgb, ${MOTIF.lightBlush} 88%, white) 78%,
+    color-mix(in srgb, ${MOTIF.medium} 82%, white) 100%
   )`,
-  borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 38%, white)`,
-  boxShadow: `0 16px 48px color-mix(in srgb, ${coastalPalette.teal} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.72)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
+  boxShadow: `0 20px 56px color-mix(in srgb, ${MOTIF.deep} 11%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.9)`,
 } as const
 
 export function WeddingPlaylist() {
@@ -190,7 +204,7 @@ export function WeddingPlaylist() {
       className="relative bg-transparent pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14"
     >
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 md:px-8">
-        {/* Header — on silk backdrop */}
+        {/* Header — outside container, on silk backdrop */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <p
             className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] sm:tracking-[0.24em] mb-2`}
@@ -221,36 +235,39 @@ export function WeddingPlaylist() {
           </div>
         </div>
 
-        {/* Playlist card */}
         <div
-          className="relative overflow-hidden rounded-xl sm:rounded-2xl border backdrop-blur-md px-4 sm:px-5 md:px-8 lg:px-10 py-6 sm:py-8 md:py-10"
-          style={cardStyle}
+          className="relative overflow-hidden rounded-2xl border px-4 py-6 sm:rounded-3xl sm:px-6 sm:py-8 md:rounded-[2rem] md:px-8 md:py-10 lg:px-10 lg:py-11"
+          style={containerStyle}
         >
-          <div
-            ref={embedContainerRef}
-            title={`${playlistName} — Spotify playlist`}
-            className="w-full min-h-[232px] md:min-h-[352px] rounded-xl overflow-hidden [&_iframe]:border-0"
-            style={{
-              borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 35%, white)`,
-            }}
-          />
+            {/* Spotify embed */}
+            <div
+              ref={embedContainerRef}
+              title={`${playlistName} — Spotify playlist`}
+              className="w-full min-h-[232px] md:min-h-[352px] rounded-xl overflow-hidden [&_iframe]:border-0"
+            />
 
-          <div className="flex justify-center mt-5 sm:mt-6">
-            <a
-              href={spotifyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${cinzel.className} ${ct.btn} inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full uppercase tracking-[0.12em] font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border`}
-              style={{
-                backgroundColor: BUTTON_COLOR,
-                borderColor: coastalPalette.dustyRose,
-                color: coastalPalette.deep,
-                boxShadow: `0 6px 20px color-mix(in srgb, ${BUTTON_COLOR} 45%, transparent)`,
-              }}
-            >
-              Open in Spotify
-            </a>
-          </div>
+            <div className="flex justify-center mt-5 sm:mt-6">
+              <a
+                href={spotifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${cinzel.className} ${ct.btn} inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full uppercase tracking-[0.12em] font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border`}
+                style={{
+                  backgroundColor: ACCENT,
+                  borderColor: MOTIF.medium,
+                  color: MOTIF.cream,
+                  boxShadow: "0 6px 20px rgba(217, 140, 164, 0.28)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = MOTIF.accent
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = ACCENT
+                }}
+              >
+                Open in Spotify
+              </a>
+            </div>
         </div>
       </div>
     </Section>

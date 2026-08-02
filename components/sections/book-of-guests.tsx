@@ -4,31 +4,52 @@ import { useState, useEffect } from "react"
 import { RefreshCw } from "lucide-react"
 import { Cinzel } from "next/font/google"
 import { useSiteConfig } from "@/hooks/use-site-config"
-import {
-  coastalLightBg,
-  coastalPalette,
-  coastalTitleShadow,
-  displayScript,
-} from "@/lib/coastal-palette"
+
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const NAME_SHADOW =
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
+
+const sectionWash = `linear-gradient(
+  180deg,
+  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
+), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "600"],
 })
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-
-const BLUE_SHELL_FILTER =
-  `brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(612%) hue-rotate(152deg) brightness(95%) contrast(88%) drop-shadow(0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 55%, transparent))`
-
 const palette = {
-  body: coastalPalette.body,
-  heading: coastalPalette.deep,
-  label: coastalPalette.dustyRose,
-  accent: coastalPalette.title,
-  deep: coastalPalette.deep,
-  cream: coastalPalette.cream,
+  body: TEXT,
+  heading: TEXT_DEEP,
+  label: ACCENT,
+  accent: NAME_COLOR,
+  deep: TEXT_DEEP,
+  cream: MOTIF.cream,
 } as const
 
 const bodyFont: React.CSSProperties = {
@@ -45,19 +66,19 @@ const ct = {
 } as const
 
 const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 38%, transparent)`,
-  borderColor: "rgba(255, 255, 255, 0.62)",
-  boxShadow: `0 28px 72px color-mix(in srgb, ${coastalPalette.teal} 10%, transparent), 0 12px 32px color-mix(in srgb, ${coastalPalette.blueGray} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
+  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
+  boxShadow: `0 28px 72px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 12px 32px color-mix(in srgb, ${MOTIF.silver} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
 } as const
 
 const glassAmbientGlowStyle = {
-  background: `linear-gradient(135deg, color-mix(in srgb, ${coastalPalette.blueGray} 32%, transparent) 0%, color-mix(in srgb, ${coastalPalette.dustyRose} 22%, transparent) 48%, color-mix(in srgb, ${coastalPalette.teal} 18%, transparent) 100%)`,
+  background: `linear-gradient(135deg, color-mix(in srgb, ${MOTIF.silver} 32%, transparent) 0%, color-mix(in srgb, ${MOTIF.accent} 22%, transparent) 48%, color-mix(in srgb, ${MOTIF.deep} 18%, transparent) 100%)`,
 } as const
 
 const refreshButtonStyle = {
-  borderColor: "rgba(255, 255, 255, 0.75)",
-  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 52%, transparent)`,
-  boxShadow: `0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 18%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.85)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)`,
+  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 55%, transparent)`,
+  boxShadow: `0 4px 14px color-mix(in srgb, ${MOTIF.silver} 18%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 interface Guest {
@@ -224,36 +245,27 @@ export function BookOfGuests() {
   }, [confirmedGuests.length])
 
   return (
-    <div
-      id="guests"
-      className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 isolate overflow-hidden"
-      style={{ backgroundColor: coastalLightBg }}
-    >
-      {/* Shell corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 z-[1]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/decoration/top-left-shell-deco.png"
-          alt=""
-          className={CORNER_DECO_CLASS}
-          style={{ filter: BLUE_SHELL_FILTER }}
-        />
-      </div>
-      <div className="pointer-events-none absolute bottom-0 right-0 z-[1]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/decoration/right-bottom-shell-deco.png"
-          alt=""
-          className={CORNER_DECO_CLASS}
-          style={{ filter: BLUE_SHELL_FILTER }}
-        />
-      </div>
+    <div className="relative isolate w-full overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
+        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: sectionWash }}
+        aria-hidden
+      />
 
+      <div
+        id="guests"
+        className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 isolate overflow-hidden"
+      >
       {/* Section Header */}
       <div className="relative z-20 text-center mb-6 sm:mb-8 md:mb-10 px-6 sm:px-10 md:px-12">
         <p
           className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] sm:tracking-[0.24em] mb-2`}
-          style={{ color: coastalPalette.dustyRose }}
+          style={{ color: ACCENT }}
         >
           Celebrating With {coupleDisplayName}
         </p>
@@ -262,23 +274,23 @@ export function BookOfGuests() {
           style={{
             ...displayScript,
             fontSize: "clamp(1.55rem, 4.1vw + 0.65rem, 4.25rem)",
-            color: coastalPalette.title,
+            color: NAME_COLOR,
             letterSpacing: "0.02em",
-            textShadow: coastalTitleShadow,
+            textShadow: NAME_SHADOW,
           }}
         >
           Book of Guests
         </h2>
         <p
           className={`${ct.bodyLg} max-w-2xl mx-auto leading-relaxed px-2`}
-          style={{ ...bodyFont, color: coastalPalette.body }}
+          style={{ ...bodyFont, color: TEXT }}
         >
           Meet the cherished souls joining us in celebration — your presence makes our day truly special.
         </p>
         <div className="flex items-center justify-center pt-2 sm:pt-3">
           <span
             className="h-px w-16 sm:w-24 md:w-32"
-            style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+            style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)` }}
           />
         </div>
       </div>
@@ -315,7 +327,7 @@ export function BookOfGuests() {
               >
                 <RefreshCw
                   className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform duration-500 ${isRefreshing ? "animate-spin" : "group-hover:rotate-180"}`}
-                  style={{ color: coastalPalette.teal }}
+                  style={{ color: ACCENT }}
                   aria-hidden
                 />
               </button>
@@ -348,9 +360,9 @@ export function BookOfGuests() {
                   <span
                     className={`${cinzel.className} ${ct.meta} px-3 py-1 rounded-full border font-semibold uppercase tracking-[0.12em]`}
                     style={{
-                      color: coastalPalette.deep,
-                      borderColor: `color-mix(in srgb, ${coastalPalette.teal} 30%, white)`,
-                      backgroundColor: `color-mix(in srgb, ${coastalPalette.teal} 12%, transparent)`,
+                      color: TEXT_DEEP,
+                      borderColor: `color-mix(in srgb, ${ACCENT} 30%, white)`,
+                      backgroundColor: `color-mix(in srgb, ${ACCENT} 12%, transparent)`,
                     }}
                   >
                     {rsvpCount} {rsvpCount === 1 ? "RSVP" : "RSVPs"}
@@ -358,16 +370,16 @@ export function BookOfGuests() {
                   <span
                     className={`${cinzel.className} ${ct.meta} px-3 py-1 rounded-full border font-semibold uppercase tracking-[0.12em]`}
                     style={{
-                      color: coastalPalette.deep,
-                      borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 30%, white)`,
-                      backgroundColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 10%, transparent)`,
+                      color: TEXT_DEEP,
+                      borderColor: `color-mix(in srgb, ${ACCENT} 30%, white)`,
+                      backgroundColor: `color-mix(in srgb, ${ACCENT} 10%, transparent)`,
                     }}
                   >
                     {confirmedGuests.length} {confirmedGuests.length === 1 ? "Party" : "Parties"}
                   </span>
                 </div>
 
-                <div className="mx-auto h-px w-12 sm:w-16 mb-4 sm:mb-5" style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 55%, white)` }} />
+                <div className="mx-auto h-px w-12 sm:w-16 mb-4 sm:mb-5" style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 55%, white)` }} />
 
                 <p className={`${ct.body} leading-relaxed max-w-md mx-auto`} style={{ ...bodyFont, color: palette.body }}>
                   Thank you for confirming your RSVP — your presence means the world to us.
@@ -431,7 +443,7 @@ export function BookOfGuests() {
                       <div
                         className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-md ring-2 ring-white/80"
                         style={{
-                          background: `linear-gradient(145deg, ${coastalPalette.teal} 0%, color-mix(in srgb, ${coastalPalette.title} 85%, ${coastalPalette.teal}) 100%)`,
+                          background: `linear-gradient(145deg, ${ACCENT} 0%, color-mix(in srgb, ${NAME_COLOR} 85%, ${ACCENT}) 100%)`,
                         }}
                       >
                         <span className={`${cinzel.className} text-white font-semibold text-xs sm:text-sm md:text-base`}>
@@ -462,7 +474,7 @@ export function BookOfGuests() {
                         {guest.isVip && (
                           <span
                             className={`${cinzel.className} shrink-0 ${ct.meta} px-2 py-0.5 rounded-full font-semibold uppercase tracking-[0.12em] text-white border border-white/80`}
-                            style={{ backgroundColor: coastalPalette.dustyRose }}
+                            style={{ backgroundColor: ACCENT }}
                           >
                             VIP
                           </span>
@@ -473,9 +485,9 @@ export function BookOfGuests() {
                         <span
                           className={`${cinzel.className} ${ct.meta} px-2.5 py-1 rounded-full border font-semibold uppercase tracking-[0.1em]`}
                           style={{
-                            color: coastalPalette.deep,
-                            borderColor: `color-mix(in srgb, ${coastalPalette.teal} 28%, white)`,
-                            backgroundColor: `color-mix(in srgb, ${coastalPalette.teal} 10%, transparent)`,
+                            color: TEXT_DEEP,
+                            borderColor: `color-mix(in srgb, ${ACCENT} 28%, white)`,
+                            backgroundColor: `color-mix(in srgb, ${ACCENT} 10%, transparent)`,
                           }}
                         >
                           {guest.allowedGuests} {guest.allowedGuests === 1 ? "Guest" : "Guests"}
@@ -483,9 +495,9 @@ export function BookOfGuests() {
                         <span
                           className={`${cinzel.className} ${ct.meta} px-2.5 py-1 rounded-full border font-semibold uppercase tracking-[0.1em]`}
                           style={{
-                            color: coastalPalette.deep,
-                            borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 35%, white)`,
-                            backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 14%, transparent)`,
+                            color: TEXT_DEEP,
+                            borderColor: `color-mix(in srgb, ${MOTIF.silver} 35%, white)`,
+                            backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 14%, transparent)`,
                           }}
                         >
                           {guest.tableNumber && guest.tableNumber.trim() !== "" ? (
@@ -499,7 +511,7 @@ export function BookOfGuests() {
                       {guest.companions && guest.companions.length > 0 && (
                         <div
                           className="pt-2.5 sm:pt-3 border-t"
-                          style={{ borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 28%, white)` }}
+                          style={{ borderColor: `color-mix(in srgb, ${MOTIF.silver} 28%, white)` }}
                         >
                           <span
                             className={`${cinzel.className} ${ct.meta} font-semibold uppercase tracking-[0.14em] mb-2 block`}
@@ -513,8 +525,8 @@ export function BookOfGuests() {
                                 key={idx}
                                 className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border transition-colors"
                                 style={{
-                                  borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 30%, white)`,
-                                  backgroundColor: `color-mix(in srgb, ${coastalPalette.cream} 55%, white)`,
+                                  borderColor: `color-mix(in srgb, ${MOTIF.silver} 30%, white)`,
+                                  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 55%, white)`,
                                 }}
                               >
                                 <span className={`${ct.meta} font-medium whitespace-nowrap`} style={{ ...bodyFont, color: palette.body }}>
@@ -525,8 +537,8 @@ export function BookOfGuests() {
                                     className={`${cinzel.className} text-[9px] sm:text-[10px] font-medium px-1.5 sm:px-2 py-0.5 rounded-full border whitespace-nowrap`}
                                     style={{
                                       color: palette.label,
-                                      borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 25%, white)`,
-                                      backgroundColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 10%, transparent)`,
+                                      borderColor: `color-mix(in srgb, ${ACCENT} 25%, white)`,
+                                      backgroundColor: `color-mix(in srgb, ${ACCENT} 10%, transparent)`,
                                     }}
                                   >
                                     {companion.relationship}
@@ -540,7 +552,7 @@ export function BookOfGuests() {
 
                       <div
                         className="pt-2.5 sm:pt-3 mt-2.5 border-t flex items-center justify-between gap-2"
-                        style={{ borderColor: `color-mix(in srgb, ${coastalPalette.blueGray} 25%, white)` }}
+                        style={{ borderColor: `color-mix(in srgb, ${MOTIF.silver} 25%, white)` }}
                       >
                         <span className={ct.meta} style={{ ...bodyFont, color: palette.body, opacity: 0.85 }}>
                           Confirmed {formatDate(guest.updatedAt)}
@@ -577,7 +589,7 @@ export function BookOfGuests() {
                             width: isActive ? "1.75rem" : "0.5rem",
                             backgroundColor: isActive
                               ? palette.accent
-                              : `color-mix(in srgb, ${coastalPalette.blueGray} 45%, transparent)`,
+                              : `color-mix(in srgb, ${MOTIF.silver} 45%, transparent)`,
                           }}
                           aria-label={`Go to page ${idx + 1}`}
                         />
@@ -607,6 +619,7 @@ export function BookOfGuests() {
         )}
 
       </div>
+    </div>
     </div>
   )
 }

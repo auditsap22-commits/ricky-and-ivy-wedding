@@ -5,25 +5,24 @@ import { siteConfig as defaultSiteConfig } from "@/content/site"
 import { useSiteConfig } from "@/hooks/use-site-config"
 import { parseWeddingDate } from "@/lib/wedding-date"
 
-const TEXT = "#3A5566"
-const TEXT_DEEP = "#2D434F"
-const ACCENT = "#9E5A5A"
-const NAME_COLOR = "#6A9BB8"
-const PALETTE = {
-  cream: "#F1EDE2",
-  sand: "#E8D5C4",
-  seafoam: "#AFC8E6",
-  sky: "#B8D4E3",
-  blush: "#D8B0B0",
-  coral: "#C98B8B",
-  peach: "#E8C4B8",
-  shell: "#F5E6DC",
-  aqua: "#9EC5D4",
-  mist: "#D4E8EF",
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
 } as const
-const PALETTE_COLORS = Object.values(PALETTE)
+const MOTIF_COLORS = Object.values(MOTIF)
 
-const BACKGROUND_IMAGE = "/decoration/oceanpastelbackground.png"
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[140px] sm:max-w-[180px] md:max-w-[240px] lg:max-w-[280px]"
 
@@ -39,13 +38,13 @@ const bodySerif: CSSProperties = {
   fontStyle: "normal",
 }
 const labelSerif: CSSProperties = {
-  fontFamily: "'Cinzel', 'Times New Roman', serif",
+  fontFamily: "var(--font-cinzel, 'Cinzel'), 'Times New Roman', serif",
   fontStyle: "normal",
   fontWeight: 500,
 }
 
 const NAME_SHADOW =
-  "0 2px 4px rgba(255, 255, 255, 0.9), 0 0 18px rgba(175, 200, 230, 0.55)"
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
 interface AmbientOrb {
   id: number
@@ -80,7 +79,7 @@ function createAmbientOrbs(count: number): AmbientOrb[] {
     x: 4 + Math.random() * 92,
     y: 6 + Math.random() * 88,
     size: 60 + Math.random() * 100,
-    color: PALETTE_COLORS[Math.floor(Math.random() * PALETTE_COLORS.length)],
+    color: MOTIF_COLORS[Math.floor(Math.random() * MOTIF_COLORS.length)],
     opacity: 0.06 + Math.random() * 0.09,
     duration: 16 + Math.random() * 14,
     delay: Math.random() * 6,
@@ -95,7 +94,7 @@ function createSparkParticles(count: number): SparkParticle[] {
     x: Math.random() * 100,
     y: Math.random() * 100,
     size: 1.5 + Math.random() * 3,
-    color: PALETTE_COLORS[Math.floor(Math.random() * PALETTE_COLORS.length)],
+    color: MOTIF_COLORS[Math.floor(Math.random() * MOTIF_COLORS.length)],
     opacity: 0.18 + Math.random() * 0.22,
     duration: 12 + Math.random() * 16,
     delay: Math.random() * 10,
@@ -113,7 +112,7 @@ function DottedRule({ compact = false }: { compact?: boolean }) {
           ? "w-[3.25rem] border-t border-dotted md:w-[4rem]"
           : "flex-1 border-t border-dotted"
       }
-      style={{ borderColor: TEXT_DEEP }}
+      style={{ borderColor: MOTIF.silver }}
     />
   )
 }
@@ -148,8 +147,8 @@ export function Hero({ visible = false }: HeroProps) {
     transform: contentVisible ? "translateY(0)" : "translateY(16px)",
   })
 
-  const groomName = siteConfig.couple.groom
-  const brideName = siteConfig.couple.bride
+  const groomName = siteConfig.couple.groomNickname
+  const brideName = siteConfig.couple.brideNickname
 
   const ceremonyDate =
     siteConfig.ceremony.date ?? siteConfig.wedding.date ?? defaultSiteConfig.ceremony.date
@@ -174,14 +173,14 @@ export function Hero({ visible = false }: HeroProps) {
       id="home"
       className="relative isolate min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Ocean pastel background */}
+      {/* Background image with blush wash */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.5)_0%,rgba(255,255,255,0.22)_52%,rgba(255,255,255,0.1)_100%)]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(255,248,248,0.58)_0%,rgba(251,236,239,0.32)_48%,rgba(232,174,190,0.14)_100%)]"
         aria-hidden
       />
 
@@ -233,7 +232,7 @@ export function Hero({ visible = false }: HeroProps) {
         style={decorVisible ? undefined : { opacity: 0, visibility: "hidden" }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/top-left-corner-deco.png" alt="" className={CORNER_DECO_CLASS} />
+        {/* <img src="/decoration/top-left-corner-deco.png" alt="" className={CORNER_DECO_CLASS} /> */}
       </div>
 
       <div
@@ -241,19 +240,20 @@ export function Hero({ visible = false }: HeroProps) {
         style={decorVisible ? undefined : { opacity: 0, visibility: "hidden" }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/bottom-right-corner-deco.png" alt="" className={CORNER_DECO_CLASS} />
+        {/* <img src="/decoration/bottom-right-corner-deco.png" alt="" className={CORNER_DECO_CLASS} /> */}
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[360px] flex-col items-center justify-center min-h-[100dvh] px-4 pb-8 pt-[calc(2.75rem+env(safe-area-inset-top,0px))] sm:max-w-[580px] sm:px-6 sm:pb-10 sm:pt-[calc(3rem+env(safe-area-inset-top,0px))] md:px-8 md:pt-[calc(3.25rem+env(safe-area-inset-top,0px))]">
         <div
           className="w-full px-6 py-8 sm:px-8 sm:py-9 md:px-10 md:py-10"
           style={{
-            background: "rgba(255, 252, 248, 0.82)",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            borderRadius: "1.25rem",
+            background: "color-mix(in srgb, var(--color-motif-cream) 90%, white)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderRadius: "1.125rem",
+            border: "1px solid color-mix(in srgb, var(--color-motif-silver) 65%, transparent)",
             boxShadow:
-              "0 4px 28px rgba(45, 67, 79, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85)",
+              "0 4px 24px color-mix(in srgb, var(--color-motif-deep) 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)",
             visibility: contentVisible ? "visible" : "hidden",
           }}
         >
@@ -276,7 +276,7 @@ export function Hero({ visible = false }: HeroProps) {
               <defs>
                 <path id="heroArcMob" d="M 6 80 A 178 178 0 0 1 294 80" fill="none" />
               </defs>
-              <text fill={TEXT_DEEP} style={{ ...labelSerif, fontSize: "22px", letterSpacing: "0.28em" }}>
+              <text fill={ACCENT} style={{ ...labelSerif, fontSize: "22px", letterSpacing: "0.24em" }}>
                 <textPath href="#heroArcMob" startOffset="50%" textAnchor="middle">
                   SAVE THE DATE
                 </textPath>
@@ -292,7 +292,7 @@ export function Hero({ visible = false }: HeroProps) {
               <defs>
                 <path id="heroArcDsk" d="M 10 104 A 280 280 0 0 1 470 104" fill="none" />
               </defs>
-              <text fill={TEXT_DEEP} style={{ ...labelSerif, fontSize: "34px", letterSpacing: "0.26em" }}>
+              <text fill={ACCENT} style={{ ...labelSerif, fontSize: "34px", letterSpacing: "0.24em" }}>
                 <textPath href="#heroArcDsk" startOffset="50%" textAnchor="middle">
                   SAVE THE DATE
                 </textPath>
@@ -380,7 +380,7 @@ export function Hero({ visible = false }: HeroProps) {
             >
               <div
                 className="col-start-2 row-start-1 border-x border-t border-dotted px-1.5 pb-0 pt-0.5 text-center md:px-2"
-                style={{ borderColor: TEXT_DEEP }}
+                style={{ borderColor: MOTIF.silver }}
               >
                 <span
                   className="text-[10px] tracking-[0.18em] uppercase md:text-[12px]"
@@ -391,19 +391,19 @@ export function Hero({ visible = false }: HeroProps) {
               </div>
 
               <div className="col-start-1 row-start-2 flex flex-col justify-center gap-[2px] px-0.5 md:px-1">
-                <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                 <span
                   className="text-center text-[10px] tracking-[0.14em] uppercase md:text-[12px]"
                   style={{ ...labelSerif, color: TEXT_DEEP }}
                 >
                   {ceremonyDay}
                 </span>
-                <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
               </div>
 
               <div
                 className="col-start-2 row-start-2 flex items-center justify-center border-x border-dotted px-1 pb-0 pt-0 md:px-1.5"
-                style={{ borderColor: TEXT_DEEP }}
+                style={{ borderColor: MOTIF.silver }}
               >
                 <span
                   className="leading-[0.85]"
@@ -419,19 +419,19 @@ export function Hero({ visible = false }: HeroProps) {
               </div>
 
               <div className="col-start-3 row-start-2 flex flex-col justify-center gap-[2px] px-0.5 md:px-1">
-                <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                 <span
                   className="mx-auto max-w-[5.75rem] text-center text-[10px] leading-[1.4] tracking-[0.14em] uppercase md:max-w-[7.25rem] md:text-[12px]"
                   style={{ ...labelSerif, color: TEXT_DEEP }}
                 >
                   At {ceremonyTime}
                 </span>
-                <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
               </div>
 
               <div
                 className="col-start-2 row-start-3 border-x border-b border-dotted px-1.5 pb-0.5 pt-0 text-center md:px-2"
-                style={{ borderColor: TEXT_DEEP }}
+                style={{ borderColor: MOTIF.silver }}
               >
                 <span
                   className="text-[14px] leading-none tracking-[0.1em] md:text-[18px]"
@@ -479,7 +479,7 @@ export function Hero({ visible = false }: HeroProps) {
               would mean so much to us.
             </p>
 
-            <div className="flex w-full flex-col items-center gap-2.5 pt-1 sm:gap-3">
+            {/* <div className="flex w-full flex-col items-center gap-2.5 pt-1 sm:gap-3">
               <div className="flex w-full max-w-[280px] items-center justify-center gap-2 md:max-w-[340px] md:gap-2.5">
                 <DottedRule compact />
                 <span
@@ -502,27 +502,27 @@ export function Hero({ visible = false }: HeroProps) {
               >
                 {siteConfig.reception.venue?.trim()}
               </p>
-            </div>
+            </div> */}
 
             <a
               href="#guest-list"
-              className="group relative mt-1 w-full sm:min-w-[200px] md:min-w-[220px] rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AFC8E6]/50"
+              className="group relative mt-1 w-full sm:min-w-[200px] md:min-w-[220px] rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8AEBE]/50"
               style={{
-                backgroundColor: NAME_COLOR,
-                boxShadow: "0 10px 24px rgba(106, 155, 184, 0.28)",
+                backgroundColor: ACCENT,
+                boxShadow: "0 10px 24px rgba(217, 140, 164, 0.28)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = PALETTE.seafoam
-                e.currentTarget.style.boxShadow = "0 12px 28px rgba(175, 200, 230, 0.35)"
+                e.currentTarget.style.backgroundColor = MOTIF.accent
+                e.currentTarget.style.boxShadow = "0 12px 28px rgba(232, 174, 190, 0.35)"
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = NAME_COLOR
-                e.currentTarget.style.boxShadow = "0 10px 24px rgba(106, 155, 184, 0.28)"
+                e.currentTarget.style.backgroundColor = ACCENT
+                e.currentTarget.style.boxShadow = "0 10px 24px rgba(217, 140, 164, 0.28)"
               }}
             >
               <span
                 className="relative z-10 inline-flex h-full min-h-[3rem] sm:min-h-[3.25rem] w-full items-center justify-center px-6 sm:px-8 text-[0.65rem] sm:text-[0.7rem] md:text-xs uppercase tracking-[0.22em] sm:tracking-[0.26em] font-semibold transition-all duration-300"
-                style={{ ...labelSerif, fontWeight: 600, color: PALETTE.cream }}
+                style={{ ...labelSerif, fontWeight: 600, color: MOTIF.cream }}
               >
                 Confirm Attendance
               </span>
@@ -579,11 +579,11 @@ export function Hero({ visible = false }: HeroProps) {
           position: absolute;
           inset: -20%;
           background:
-            radial-gradient(circle at 14% 18%, ${PALETTE.seafoam}28 0%, transparent 40%),
-            radial-gradient(circle at 86% 14%, ${PALETTE.blush}24 0%, transparent 38%),
-            radial-gradient(circle at 78% 82%, ${PALETTE.peach}22 0%, transparent 42%),
-            radial-gradient(circle at 20% 78%, ${PALETTE.mist}30 0%, transparent 38%),
-            radial-gradient(circle at 50% 50%, ${PALETTE.sand}20 0%, transparent 52%);
+            radial-gradient(circle at 14% 18%, ${MOTIF.lightBlush}30 0%, transparent 40%),
+            radial-gradient(circle at 86% 14%, ${MOTIF.accent}28 0%, transparent 38%),
+            radial-gradient(circle at 78% 82%, ${MOTIF.medium}24 0%, transparent 42%),
+            radial-gradient(circle at 20% 78%, ${MOTIF.soft}32 0%, transparent 38%),
+            radial-gradient(circle at 50% 50%, ${MOTIF.cream}22 0%, transparent 52%);
           animation: gradientBreath 22s ease-in-out infinite alternate;
         }
 

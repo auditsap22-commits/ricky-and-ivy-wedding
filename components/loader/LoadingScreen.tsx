@@ -9,23 +9,22 @@ interface LoadingScreenProps {
   onComplete: () => void
 }
 
-const TEXT = "#3A5566"
-const TEXT_DEEP = "#2D434F"
-const ACCENT = "#9E5A5A"
-const NAME_COLOR = "#6A9BB8"
-const PALETTE = {
-  cream: "#F1EDE2",
-  sand: "#E8D5C4",
-  seafoam: "#AFC8E6",
-  sky: "#B8D4E3",
-  blush: "#D8B0B0",
-  coral: "#C98B8B",
-  peach: "#E8C4B8",
-  shell: "#F5E6DC",
-  aqua: "#9EC5D4",
-  mist: "#D4E8EF",
+/** Blush pink motif — mirrors globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
 } as const
-const PALETTE_COLORS = Object.values(PALETTE)
+const MOTIF_COLORS = Object.values(MOTIF)
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
 const TOTAL_DURATION_MS = 15000
 
 const PRELOAD_IMAGES = [
@@ -34,7 +33,7 @@ const PRELOAD_IMAGES = [
   "/decoration/bottom-right-corner-deco.png",
 ] as const
 
-const BACKGROUND_IMAGE = "/decoration/oceanpastelbackground.png"
+const BACKGROUND_IMAGE = "/Details/background.png"
 const CORNER_DECO_CLASS =
   "block h-auto w-auto max-w-[104px] sm:max-w-[180px] md:max-w-[240px] lg:max-w-[280px]"
 
@@ -50,13 +49,13 @@ const bodySerif: CSSProperties = {
   fontStyle: "normal",
 }
 const labelSerif: CSSProperties = {
-  fontFamily: "'Cinzel', 'Times New Roman', serif",
+  fontFamily: "var(--font-cinzel, 'Cinzel'), 'Times New Roman', serif",
   fontStyle: "normal",
   fontWeight: 500,
 }
 
 const NAME_SHADOW =
-  "0 2px 4px rgba(255, 255, 255, 0.9), 0 0 18px rgba(175, 200, 230, 0.55)"
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
 interface AmbientOrb {
   id: number
@@ -91,7 +90,7 @@ function createAmbientOrbs(count: number): AmbientOrb[] {
     x: 4 + Math.random() * 92,
     y: 6 + Math.random() * 88,
     size: 60 + Math.random() * 100,
-    color: PALETTE_COLORS[Math.floor(Math.random() * PALETTE_COLORS.length)],
+    color: MOTIF_COLORS[Math.floor(Math.random() * MOTIF_COLORS.length)],
     opacity: 0.06 + Math.random() * 0.09,
     duration: 16 + Math.random() * 14,
     delay: Math.random() * 6,
@@ -106,7 +105,7 @@ function createSparkParticles(count: number): SparkParticle[] {
     x: Math.random() * 100,
     y: Math.random() * 100,
     size: 1.5 + Math.random() * 3,
-    color: PALETTE_COLORS[Math.floor(Math.random() * PALETTE_COLORS.length)],
+    color: MOTIF_COLORS[Math.floor(Math.random() * MOTIF_COLORS.length)],
     opacity: 0.18 + Math.random() * 0.22,
     duration: 12 + Math.random() * 16,
     delay: Math.random() * 10,
@@ -124,7 +123,7 @@ function DottedRule({ compact = false }: { compact?: boolean }) {
           ? "w-[3.25rem] border-t border-dotted md:w-[4rem]"
           : "flex-1 border-t border-dotted"
       }
-      style={{ borderColor: TEXT_DEEP }}
+      style={{ borderColor: MOTIF.silver }}
     />
   )
 }
@@ -207,14 +206,14 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-30 isolate flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Ocean pastel background */}
+      {/* Background image with blush wash */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.5)_0%,rgba(255,255,255,0.22)_52%,rgba(255,255,255,0.1)_100%)]"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(255,248,248,0.58)_0%,rgba(251,236,239,0.32)_48%,rgba(232,174,190,0.14)_100%)]"
         aria-hidden
       />
 
@@ -266,7 +265,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         style={decorVisible ? undefined : { opacity: 0, visibility: "hidden" }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/top-left-corner-deco.png" alt="" className={CORNER_DECO_CLASS} />
+        {/* <img src="/decoration/top-left-corner-deco.png" alt="" className={CORNER_DECO_CLASS} /> */}
       </div>
 
       <div
@@ -274,42 +273,43 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         style={decorVisible ? undefined : { opacity: 0, visibility: "hidden" }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/decoration/bottom-right-corner-deco.png" alt="" className={CORNER_DECO_CLASS} />
+        {/* <img src="/decoration/bottom-right-corner-deco.png" alt="" className={CORNER_DECO_CLASS} /> */}
       </div>
 
-      <div className="relative z-10 mx-auto flex h-[100dvh] max-h-[100dvh] w-full max-w-[360px] flex-col items-center justify-center px-3 pt-[calc(0.375rem+env(safe-area-inset-top,0px))] pb-[calc(0.375rem+env(safe-area-inset-bottom,0px))] sm:max-w-[580px] sm:px-6 sm:pb-10 sm:pt-[calc(3rem+env(safe-area-inset-top,0px))] md:px-8 md:pt-[calc(3.25rem+env(safe-area-inset-top,0px))]">
+      <div className="relative z-10 mx-auto flex h-[100dvh] max-h-[100dvh] w-full max-w-[340px] flex-col items-center justify-center px-2.5 pt-[calc(0.25rem+env(safe-area-inset-top,0px))] pb-[calc(0.25rem+env(safe-area-inset-bottom,0px))] max-[375px]:max-w-[320px] sm:max-w-[580px] sm:px-6 sm:pb-10 sm:pt-[calc(3rem+env(safe-area-inset-top,0px))] md:px-8 md:pt-[calc(3.25rem+env(safe-area-inset-top,0px))]">
         <div
-          className="flex h-auto w-full shrink-0 flex-col px-5 py-4 [@media(max-height:700px)]:h-full [@media(max-height:700px)]:min-h-0 sm:h-auto sm:max-h-none sm:px-8 sm:py-5 md:px-10 md:py-6"
+          className="flex h-auto w-full shrink-0 flex-col px-4 py-3 [@media(max-height:667px)]:px-3.5 [@media(max-height:667px)]:py-2.5 [@media(max-height:700px)]:h-full [@media(max-height:700px)]:min-h-0 sm:h-auto sm:max-h-none sm:px-8 sm:py-5 md:px-10 md:py-6"
           style={{
-            background: "rgba(255, 252, 248, 0.82)",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            borderRadius: "1.25rem",
+            background: "color-mix(in srgb, var(--color-motif-cream) 90%, white)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderRadius: "1.125rem",
+            border: "1px solid color-mix(in srgb, var(--color-motif-silver) 65%, transparent)",
             boxShadow:
-              "0 4px 28px rgba(45, 67, 79, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85)",
+              "0 4px 24px color-mix(in srgb, var(--color-motif-deep) 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)",
             visibility: contentVisible ? "visible" : "hidden",
           }}
         >
           <div
-            className="mx-auto flex h-auto w-full max-w-[300px] shrink-0 flex-col items-center gap-y-4 text-center [@media(max-height:700px)]:h-full [@media(max-height:700px)]:min-h-0 [@media(max-height:700px)]:justify-evenly [@media(max-height:700px)]:gap-y-0 sm:h-auto sm:max-w-[440px] sm:justify-start sm:gap-y-0 md:max-w-[480px]"
+            className="mx-auto flex h-auto w-full max-w-[288px] shrink-0 flex-col items-center gap-y-3 text-center [@media(max-height:667px)]:max-w-[272px] [@media(max-height:667px)]:gap-y-2 [@media(max-height:700px)]:h-full [@media(max-height:700px)]:min-h-0 [@media(max-height:700px)]:justify-evenly [@media(max-height:700px)]:gap-y-0 sm:h-auto sm:max-w-[440px] sm:justify-start sm:gap-y-0 md:max-w-[480px]"
             style={{
               color: TEXT,
               WebkitFontSmoothing: "antialiased",
             }}
           >
             {/* SAVE THE DATE — arch */}
-            <div style={{ ...fade(0) }} className="mt-5 w-full sm:mb-0 sm:mt-8 md:mt-10">
+            <div style={{ ...fade(0) }} className="w-full pt-0.5 sm:mb-0 sm:mt-8 md:mt-10">
               <div>
                 <svg
                   viewBox="0 0 300 100"
-                  className="mx-auto h-[60px] w-full md:hidden"
+                  className="mx-auto h-[52px] w-full [@media(max-height:667px)]:h-[48px] md:hidden"
                   aria-hidden
                   overflow="visible"
                 >
                   <defs>
                     <path id="loadingArcMob" d="M 6 80 A 178 178 0 0 1 294 80" fill="none" />
                   </defs>
-                  <text fill={TEXT_DEEP} style={{ ...labelSerif, fontSize: "24px", letterSpacing: "0.28em" }}>
+                  <text fill={ACCENT} style={{ ...labelSerif, fontSize: "21px", letterSpacing: "0.22em" }}>
                     <textPath href="#loadingArcMob" startOffset="50%" textAnchor="middle">
                       SAVE THE DATE
                     </textPath>
@@ -325,7 +325,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                   <defs>
                     <path id="loadingArcDsk" d="M 10 104 A 280 280 0 0 1 470 104" fill="none" />
                   </defs>
-                  <text fill={TEXT_DEEP} style={{ ...labelSerif, fontSize: "34px", letterSpacing: "0.26em" }}>
+                  <text fill={ACCENT} style={{ ...labelSerif, fontSize: "34px", letterSpacing: "0.24em" }}>
                     <textPath href="#loadingArcDsk" startOffset="50%" textAnchor="middle">
                       SAVE THE DATE
                     </textPath>
@@ -335,19 +335,19 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             </div>
 
             {/* Invitation copy */}
-            <div style={{ ...fade(100) }} className="flex w-full flex-col items-center gap-2 sm:mt-4 md:gap-2">
-              <div className="flex w-full max-w-[280px] items-center justify-center gap-2 md:max-w-[320px]">
+            <div style={{ ...fade(100) }} className="flex w-full flex-col items-center gap-1.5 sm:mt-4 md:gap-2">
+              <div className="flex w-full max-w-[260px] items-center justify-center gap-1.5 md:max-w-[320px] md:gap-2">
                 <DottedRule compact />
                 <p
-                  className="shrink-0 text-[11px] tracking-[0.18em] uppercase md:text-[12px]"
-                  style={{ ...labelSerif, color: TEXT_DEEP, opacity: 0.9 }}
+                  className="shrink-0 text-[10px] tracking-[0.14em] uppercase [@media(max-height:667px)]:text-[9px] md:text-[12px] md:tracking-[0.18em]"
+                  style={{ ...labelSerif, color: TEXT_DEEP, opacity: 0.92 }}
                 >
                   With joy in our hearts
                 </p>
                 <DottedRule compact />
               </div>
               <p
-                className="max-w-[280px] text-[14px] leading-[1.55] md:max-w-none md:text-[15px] md:leading-[1.6]"
+                className="max-w-[260px] text-[13px] leading-[1.5] [@media(max-height:667px)]:text-[12px] [@media(max-height:667px)]:leading-[1.45] md:max-w-none md:text-[15px] md:leading-[1.6]"
                 style={{ ...bodySerif, color: TEXT, fontStyle: "italic" }}
               >
                 we invite you to witness
@@ -357,25 +357,25 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             </div>
 
             {/* Couple names */}
-            <div style={{ ...fade(220) }} className="flex w-full flex-col items-center gap-3 sm:mt-7 md:mt-8 md:gap-4">
+            <div style={{ ...fade(220) }} className="flex w-full flex-col items-center gap-2 sm:mt-7 md:mt-8 md:gap-4">
               <h1
-                className="mt-4 w-full leading-[1.05] sm:mt-0"
+                className="w-full leading-[1] sm:mt-0"
                 style={{
                   ...displayScript,
-                  fontSize: "clamp(52px, 14vw, 80px)",
+                  fontSize: "clamp(44px, 12vw, 80px)",
                   color: NAME_COLOR,
                   fontWeight: 400,
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.01em",
                   textShadow: NAME_SHADOW,
                 }}
               >
                 {groomNickname}
               </h1>
 
-              <div className="flex w-full max-w-[220px] items-center justify-center gap-2 md:max-w-[280px] md:gap-3">
+              <div className="flex w-full max-w-[200px] items-center justify-center gap-1.5 md:max-w-[280px] md:gap-3">
                 <DottedRule compact />
                 <span
-                  className="shrink-0 text-[14px] italic md:text-[16px]"
+                  className="shrink-0 text-[13px] italic md:text-[16px]"
                   style={{ ...bodySerif, color: TEXT, fontStyle: "italic" }}
                 >
                   and
@@ -384,13 +384,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               </div>
 
               <h1
-                className="mb-4 w-full leading-[1.05] sm:mb-0"
+                className="w-full leading-[1]"
                 style={{
                   ...displayScript,
-                  fontSize: "clamp(52px, 14vw, 80px)",
+                  fontSize: "clamp(44px, 12vw, 80px)",
                   color: NAME_COLOR,
                   fontWeight: 400,
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.01em",
                   textShadow: NAME_SHADOW,
                 }}
               >
@@ -401,7 +401,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             {/* Together with their families */}
             <div style={{ ...fade(520) }} className="w-full sm:mt-6">
               <p
-                className="w-full text-[13px] leading-[1.65] md:text-[15px] md:leading-[1.75]"
+                className="w-full text-[12px] leading-[1.55] [@media(max-height:667px)]:text-[11px] [@media(max-height:667px)]:leading-[1.5] md:text-[15px] md:leading-[1.75]"
                 style={{ ...bodySerif, color: TEXT }}
               >
                 Together with their families
@@ -413,7 +413,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             {/* Date block */}
             <div style={{ ...fade(620) }} className="w-full sm:mt-5">
               <div
-                className="mx-auto grid w-full max-w-[260px] gap-y-0 md:max-w-[340px]"
+                className="mx-auto grid w-full max-w-[240px] gap-y-0 [@media(max-height:667px)]:max-w-[228px] md:max-w-[340px]"
                 style={{
                   gridTemplateColumns: "1fr auto 1fr",
                   gridTemplateRows: "auto auto auto",
@@ -421,10 +421,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               >
                 <div
                   className="col-start-2 row-start-1 border-x border-t border-dotted px-1.5 pb-0 pt-0.5 text-center md:px-2"
-                  style={{ borderColor: TEXT_DEEP }}
+                  style={{ borderColor: MOTIF.silver }}
                 >
                   <span
-                    className="text-[11px] tracking-[0.18em] uppercase md:text-[12px]"
+                    className="text-[10px] tracking-[0.14em] uppercase [@media(max-height:667px)]:text-[9px] md:text-[12px] md:tracking-[0.18em]"
                     style={{ ...labelSerif, color: TEXT_DEEP }}
                   >
                     {month}
@@ -432,25 +432,25 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                 </div>
 
                 <div className="col-start-1 row-start-2 flex flex-col justify-center gap-[2px] px-0.5 md:px-1">
-                  <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                  <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                   <span
-                    className="text-center text-[11px] tracking-[0.14em] uppercase md:text-[12px]"
+                    className="text-center text-[10px] tracking-[0.12em] uppercase [@media(max-height:667px)]:text-[9px] md:text-[12px]"
                     style={{ ...labelSerif, color: TEXT_DEEP }}
                   >
                     {ceremonyDay}
                   </span>
-                  <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                  <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                 </div>
 
                 <div
                   className="col-start-2 row-start-2 flex items-center justify-center border-x border-dotted px-1 pb-0 pt-0 md:px-1.5"
-                  style={{ borderColor: TEXT_DEEP }}
+                  style={{ borderColor: MOTIF.silver }}
                 >
                   <span
                     className="leading-[0.85]"
                     style={{
                       ...labelSerif,
-                      fontSize: "clamp(52px, 14vw, 68px)",
+                      fontSize: "clamp(44px, 12vw, 68px)",
                       color: ACCENT,
                       fontWeight: 600,
                     }}
@@ -460,22 +460,22 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                 </div>
 
                 <div className="col-start-3 row-start-2 flex flex-col justify-center gap-[2px] px-0.5 md:px-1">
-                  <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                  <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                   <span
-                    className="whitespace-nowrap text-center text-[11px] tracking-[0.12em] uppercase md:text-[12px]"
+                    className="whitespace-nowrap text-center text-[10px] tracking-[0.1em] uppercase [@media(max-height:667px)]:text-[9px] md:text-[12px]"
                     style={{ ...labelSerif, color: TEXT_DEEP }}
                   >
                     At {ceremonyTime}
                   </span>
-                  <div className="border-t border-dotted" style={{ borderColor: TEXT_DEEP }} />
+                  <div className="border-t border-dotted" style={{ borderColor: MOTIF.silver }} />
                 </div>
 
                 <div
                   className="col-start-2 row-start-3 border-x border-b border-dotted px-1.5 pb-0.5 pt-0 text-center md:px-2"
-                  style={{ borderColor: TEXT_DEEP }}
+                  style={{ borderColor: MOTIF.silver }}
                 >
                   <span
-                    className="text-[15px] leading-none tracking-[0.1em] md:text-[18px]"
+                    className="text-[14px] leading-none tracking-[0.08em] [@media(max-height:667px)]:text-[13px] md:text-[18px] md:tracking-[0.1em]"
                     style={{ ...labelSerif, color: TEXT_DEEP, fontWeight: 600 }}
                   >
                     {year}
@@ -489,7 +489,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               <div className="flex items-center justify-center gap-1.5 md:gap-2">
                 <DottedRule compact />
                 <span
-                  className="text-[14px] italic md:text-[15px]"
+                  className="text-[13px] italic md:text-[15px]"
                   style={{ ...bodySerif, color: TEXT, fontStyle: "italic" }}
                 >
                   at
@@ -497,7 +497,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                 <DottedRule compact />
               </div>
               <p
-                className="mt-2 text-[15px] leading-snug md:mt-2.5 md:text-[16px]"
+                className="mt-1.5 text-[13px] leading-snug [@media(max-height:667px)]:text-[12px] md:mt-2.5 md:text-[16px]"
                 style={{ ...bodySerif, color: TEXT }}
               >
                 {siteConfig.ceremony.location}
@@ -505,31 +505,31 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             </div>
 
             {/* Closing line + loading indicator */}
-            <div style={{ ...fade(840) }} className="flex w-full flex-col items-center gap-3 px-1 sm:mt-7 sm:gap-4">
+            <div style={{ ...fade(840) }} className="flex w-full flex-col items-center gap-2 px-0.5 sm:mt-7 sm:gap-4">
               <p
-                className="text-[13px] leading-relaxed md:text-[15px]"
+                className="text-[12px] leading-[1.55] [@media(max-height:667px)]:text-[11px] md:text-[15px] md:leading-relaxed"
                 style={{ ...bodySerif, color: TEXT }}
               >
                 Your presence, prayers, and love will mean the world to us.
               </p>
 
-              <div className="w-full max-w-[220px] pb-1 md:max-w-[320px]">
+              <div className="w-full max-w-[200px] pb-0.5 md:max-w-[320px]">
                 <p
-                  className="loading-dots-text text-[11px] tracking-[0.28em] uppercase md:text-[12px]"
-                  style={{ ...labelSerif, color: TEXT_DEEP, opacity: 0.9, letterSpacing: "0.22em" }}
+                  className="loading-dots-text text-[10px] tracking-[0.18em] uppercase [@media(max-height:667px)]:text-[9px] md:text-[12px] md:tracking-[0.22em]"
+                  style={{ ...labelSerif, color: ACCENT, opacity: 0.95, letterSpacing: "0.18em" }}
                   aria-live="polite"
                 >
                   Loading {loadPercent}%
                 </p>
                 <div
-                  className="mt-2 h-[3px] w-full overflow-hidden rounded-full"
-                  style={{ backgroundColor: `${PALETTE.aqua}44` }}
+                  className="mt-1.5 h-[2.5px] w-full overflow-hidden rounded-full md:mt-2 md:h-[3px]"
+                  style={{ backgroundColor: `${MOTIF.medium}66` }}
                 >
                   <div
                     className="h-full rounded-full transition-[width] duration-150 ease-out"
                     style={{
                       width: `${loadPercent}%`,
-                      background: `linear-gradient(90deg, ${PALETTE.seafoam}, ${PALETTE.blush}, ${PALETTE.peach})`,
+                      background: `linear-gradient(90deg, ${MOTIF.soft}, ${MOTIF.accent}, ${MOTIF.deep})`,
                     }}
                   />
                 </div>
@@ -595,11 +595,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           position: absolute;
           inset: -20%;
           background:
-            radial-gradient(circle at 14% 18%, ${PALETTE.seafoam}28 0%, transparent 40%),
-            radial-gradient(circle at 86% 14%, ${PALETTE.blush}24 0%, transparent 38%),
-            radial-gradient(circle at 78% 82%, ${PALETTE.peach}22 0%, transparent 42%),
-            radial-gradient(circle at 20% 78%, ${PALETTE.mist}30 0%, transparent 38%),
-            radial-gradient(circle at 50% 50%, ${PALETTE.sand}20 0%, transparent 52%);
+            radial-gradient(circle at 14% 18%, ${MOTIF.lightBlush}30 0%, transparent 40%),
+            radial-gradient(circle at 86% 14%, ${MOTIF.accent}28 0%, transparent 38%),
+            radial-gradient(circle at 78% 82%, ${MOTIF.medium}24 0%, transparent 42%),
+            radial-gradient(circle at 20% 78%, ${MOTIF.soft}32 0%, transparent 38%),
+            radial-gradient(circle at 50% 50%, ${MOTIF.cream}22 0%, transparent 52%);
           animation: gradientBreath 22s ease-in-out infinite alternate;
         }
 

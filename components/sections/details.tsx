@@ -18,12 +18,39 @@ import {
   X,
   MapPin,
 } from "lucide-react"
-import {
-  coastalLightBg,
-  coastalPalette,
-  coastalTitleShadow,
-  displayScript,
-} from "@/lib/coastal-palette"
+
+/** Blush pink motif — mirrors LoadingScreen & globals.css --color-motif-* */
+const MOTIF = {
+  cream: "#FFF8F8",
+  lightBlush: "#F7DDE2",
+  soft: "#FBECEF",
+  accent: "#E8AEBE",
+  deep: "#D98CA4",
+  medium: "#F2C7D3",
+  silver: "#EAD9DE",
+} as const
+
+const TEXT = "#5C4048"
+const TEXT_DEEP = "#4A3540"
+const ACCENT = MOTIF.deep
+const NAME_COLOR = "#C97A94"
+
+const NAME_SHADOW =
+  "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
+
+const BACKGROUND_IMAGE = "/Details/background.png"
+
+const sectionWash = `linear-gradient(
+  180deg,
+  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
+), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+
+const displayScript = {
+  fontFamily: "'Brightwall', cursive",
+  fontWeight: 400,
+} as const
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -35,35 +62,32 @@ const cinzel = Cinzel({
   weight: ["400", "600"],
 })
 
-const CORNER_DECO_CLASS =
-  "block h-auto w-auto max-w-[120px] sm:max-w-[160px] md:max-w-[220px] lg:max-w-[260px]"
-
-const BLUE_SHELL_FILTER =
-  `brightness(0) saturate(100%) invert(58%) sepia(18%) saturate(612%) hue-rotate(152deg) brightness(95%) contrast(88%) drop-shadow(0 4px 14px color-mix(in srgb, ${coastalPalette.blueGray} 55%, transparent))`
-
-const BUTTON_COLOR = "#FBCFC6"
-
 const detailText = {
-  body: coastalPalette.body,
-  heading: coastalPalette.deep,
-  label: coastalPalette.dustyRose,
-  accent: coastalPalette.title,
+  body: TEXT,
+  heading: TEXT_DEEP,
+  label: ACCENT,
+  accent: NAME_COLOR,
 } as const
 
 const bodyFont: React.CSSProperties = {
   fontFamily: "'SortsMillGoudy', Georgia, 'Times New Roman', serif",
 }
 
-const DETAILS_GRADIENT = "linear-gradient(155deg, #FBCFC6 0%, #DFCFD0 50%, #DDE1ED 100%)"
+const DETAILS_GRADIENT = `linear-gradient(
+  155deg,
+  color-mix(in srgb, ${MOTIF.cream} 94%, white) 0%,
+  color-mix(in srgb, ${MOTIF.soft} 92%, white) 48%,
+  color-mix(in srgb, ${MOTIF.lightBlush} 88%, white) 100%
+)`
 
 const cardStyle = {
   background: DETAILS_GRADIENT,
-  borderColor: "rgba(255, 255, 255, 0.92)",
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
   borderWidth: "2px",
   borderStyle: "solid",
   outline: "1px solid rgba(255, 255, 255, 0.55)",
   outlineOffset: "2px",
-  boxShadow: `0 16px 48px color-mix(in srgb, ${coastalPalette.teal} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.85)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 // Slightly compact type inside card containers (not the page header)
@@ -90,26 +114,83 @@ const ct = {
 } as const
 
 const attireGuide = {
-  principalSponsors: {
-    image: "/Details/Principal.png",
+  sponsors: {
+    image: "/Details/sponsorsnew.png",
+    imageAspect: "500/400",
     ladies: {
-      colors: ["#F9F6EE", "#E7DCC5", "#D2B48C", "#C4A882"] as const,
-      description: "Modern Filipiniana-inspired dress in any shades of Beige.",
+      colors: [
+        "#F6D6DE", // Blush Pink
+        "#EEC3CF", // Soft Rose
+        "#DFA8B8", // Dusty Blush
+        "#CD857D", // Light Blush
+      ] as const,
+      description: "Any style of elegant formal dress or long gown in shades of blush pink",
     },
+    
     gentlemen: {
-      colors: ["#FAF6EE", "#E8DFC8", "#D4C4A8", "#A89070"] as const,
-      description: "Barong tagalog and pants.",
+      colors: [
+        "#F5F1E8", // Ivory Barong
+        "#000000", // Dark Trousers
+        "#4A4A4A", // Charcoal Accent
+      ] as const,
+      description: "Traditional Barong Tagalog paired with dark trousers",
+    },
+  },
+  entourage: {
+    image: "/Details/entouurageAttire.png",
+    imageAspect: "500/400",
+    ladies: {
+      colors: [
+        "#F6D6DE", // Blush Pink
+        "#EEC3CF", // Soft Rose
+        "#DFA8B8", // Dusty Pink
+        "#F8E8EC", // Light Blush
+      ] as const,
+      description: "Any style of long gown in shades of Blush Pink",
+    },
+    
+    gentlemen: {
+      colors: [
+        "#000000", // Black Coat & Pants
+        "#FFFFFF", // White Long Sleeve
+        "#F6D6DE", // Blush Pink Necktie/Bow Tie
+      ] as const,
+      description: "Black coat, white long sleeve, black pants with a blush pink necktie or bow tie",
     },
   },
   guests: {
-    image: "/Details/Guest.jpg",
+    image: "/Details/guestattire.png",
+    imageAspect: "500/400",
     ladies: {
-      colors: ["#B8DCE8", "#7BAFD4", "#5A8FB8", "#3D6B9A"] as const,
-      description: "Modern Filipiniana-inspired dress in any shades of Blue.",
+      colors: [
+        "#F6D6DE", // Blush Pink
+        "#EEC3CF", // Soft Rose
+        "#DFA8B8", // Dusty Pink
+        "#CD857D", // Light Blush
+      ] as const,
+      description:
+        "Any style of elegant formal dress or long gown in shades of blush pink. Pants, trousers, and jumpsuits are not permitted.",
+    },
+    
+    gentlemen: {
+      colors: [
+        "#000000", // Black Coat & Pants
+        "#FFFFFF", // White Long Sleeve
+      ] as const,
+      description:
+        "Black suit coat, white long-sleeve dress shirt, black necktie, black dress pants, and black leather shoes. Only black suits and black pants are permitted.",
+    },
+  },
+  guests2: {
+    image: "/Details/guest (5).png",
+    imageAspect: "677/369",
+    ladies: {
+      colors: ["#C3878C", "#ECB4BC", "#EBA7B3", "#E8B3A7"] as const,
+      description: "Burgundy, Maroon, Dark Brown",
     },
     gentlemen: {
-      colors: ["#FAF6EE", "#E8DFC8", "#D4C4A8", "#A89070"] as const,
-      description: "Short/Long Sleeves Barong Tagalong and Pants Color of pants - darker shades like black.",
+      colors: ["#C3878C", "#ECB4BC", "#EBA7B3", "#E8B3A7"] as const,
+      description: "Burgundy, Maroon, Dark Brown",
     },
   },
 } as const
@@ -163,31 +244,129 @@ function AttirePaletteGroup({
   )
 }
 
+function CoupleImagesCarousel({
+  coupleImages,
+  currentImageIndex,
+  rotationOffset,
+}: {
+  coupleImages: string[]
+  currentImageIndex: number
+  rotationOffset: number
+}) {
+  return (
+    <div className="mb-4 flex justify-center gap-2 sm:mb-5 sm:gap-2.5">
+      {coupleImages.map((image, index) => {
+        const isActive = index === currentImageIndex
+        const baseRotation = index === 0 ? -5 : index === 1 ? 5 : index === 2 ? -3 : 3
+        const currentRotation = isActive
+          ? baseRotation + Math.sin((rotationOffset * Math.PI) / 180) * 2
+          : baseRotation
+        const scale = isActive ? "scale(1.1)" : "scale(1)"
+        const itemClass = `relative h-14 w-14 overflow-hidden rounded-lg border-2 shadow-md transition-all duration-700 ease-in-out sm:h-16 sm:w-16 ${isActive ? "z-10 scale-110" : "scale-100 opacity-70"}`
+        const imgClass = `object-cover transition-opacity duration-500 ${isActive ? "opacity-100" : "opacity-70"}`
+
+        return (
+          <div
+            key={image}
+            className={itemClass}
+            style={{
+              transform: `rotate(${currentRotation}deg) ${scale}`,
+              borderColor: "color-mix(in srgb, var(--color-motif-deep) 20%, transparent)",
+            }}
+          >
+            <Image
+              src={image}
+              alt={`Wedding couple ${index + 1}`}
+              fill
+              className={imgClass}
+              sizes="(max-width: 640px) 56px, 64px"
+            />
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function ReminderCard({
+  title,
+  children,
+  variant = "soft",
+  isLast = false,
+}: {
+  title: string
+  children: ReactNode
+  variant?: "soft" | "accent"
+  isLast?: boolean
+}) {
+  const accentBar = variant === "accent" ? ACCENT : MOTIF.medium
+
+  return (
+    <div className="group relative px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6">
+      {!isLast && (
+        <div
+          className="absolute bottom-0 left-4 right-4 h-px sm:left-5 sm:right-5 md:left-6 md:right-6"
+          style={{
+            background: `linear-gradient(90deg, transparent, color-mix(in srgb, ${MOTIF.silver} 55%, white), transparent)`,
+          }}
+          aria-hidden
+        />
+      )}
+      <div className="flex gap-3 sm:gap-4 md:gap-5">
+        <div
+          className="mt-1 w-[3px] shrink-0 rounded-full transition-colors duration-300 group-hover:opacity-100"
+          style={{
+            background: `linear-gradient(180deg, ${accentBar}, color-mix(in srgb, ${accentBar} 45%, white))`,
+            minHeight: "2.5rem",
+          }}
+          aria-hidden
+        />
+        <div className="min-w-0 flex-1">
+          <h4
+            className={`${cinzel.className} ${ct.reminderHead} mb-1.5 font-semibold uppercase tracking-[0.1em] sm:mb-2`}
+            style={{ color: variant === "accent" ? NAME_COLOR : detailText.heading }}
+          >
+            {title}
+          </h4>
+          <div
+            className={`font-goudy-italic ${ct.reminderBody} leading-relaxed`}
+            style={{ color: detailText.body }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AttireCard({
   title,
   image,
   alt,
   children,
+  imageAspect = "500/400",
   imageClassName = "object-cover object-center",
 }: {
   title: string
   image: string
   alt: string
   children: ReactNode
+  imageAspect?: string
   imageClassName?: string
 }) {
   return (
     <div className="relative group">
       <div
         className="absolute -inset-1 rounded-2xl opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, ${coastalPalette.teal} 18%, transparent), transparent)` }}
+        style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, ${MOTIF.accent} 18%, transparent), transparent)` }}
       />
       <div
         className="relative overflow-hidden rounded-xl border transition-all duration-300 sm:rounded-2xl"
         style={cardStyle}
       >
 
-        <div className="relative w-full aspect-[2176/1741] bg-[#FFF7F6]">
+        <div className="relative w-full" style={{ aspectRatio: imageAspect, backgroundColor: MOTIF.cream }}>
           <Image
             src={image}
             alt={alt}
@@ -210,7 +389,7 @@ function AttireCard({
 
         <div
           className="border-t px-4 py-4 sm:px-6 sm:py-5 md:px-8"
-          style={{ borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 25%, white)` }}
+          style={{ borderColor: `color-mix(in srgb, ${ACCENT} 25%, white)` }}
         >
           {children}
         </div>
@@ -264,7 +443,7 @@ function EventVenueCard({
     <div className="relative group">
       <div
         className="absolute -inset-1 rounded-2xl opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, ${coastalPalette.teal} 15%, transparent), transparent)` }}
+        style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, ${MOTIF.accent} 15%, transparent), transparent)` }}
       />
 
       <div
@@ -274,7 +453,7 @@ function EventVenueCard({
         <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[30rem] overflow-hidden">
           {images.map((src, index) => (
             <div
-              key={src}
+              key={`${copyId}-image-${index}`}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
                 index === activeImageIndex ? "opacity-100" : "opacity-0"
               }`}
@@ -310,14 +489,14 @@ function EventVenueCard({
               <>
                 <p
                   className={`${cinzel.className} ${ct.label} font-semibold uppercase tracking-[0.2em]`}
-                  style={{ color: coastalPalette.deep }}
+                  style={{ color: TEXT_DEEP }}
                 >
                   {day}
                 </p>
 
                 <p
                   className={`${cinzel.className} ${ct.month} font-semibold leading-none`}
-                  style={{ color: coastalPalette.deep }}
+                  style={{ color: TEXT_DEEP }}
                 >
                   {eventDate.toLocaleString("default", { month: "long" })}
                 </p>
@@ -325,17 +504,17 @@ function EventVenueCard({
                 <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-5 py-1 sm:py-2">
                   <p
                     className={`${cinzel.className} ${ct.dayNum} font-semibold leading-none`}
-                    style={{ color: coastalPalette.title }}
+                    style={{ color: NAME_COLOR }}
                   >
                     {eventDate.getDate()}
                   </p>
                   <div
                     className="h-10 sm:h-12 md:h-14 w-[2px] rounded-full"
-                    style={{ backgroundColor: coastalPalette.teal }}
+                    style={{ backgroundColor: ACCENT }}
                   />
                   <p
                     className={`${cinzel.className} ${ct.year} font-semibold leading-none`}
-                    style={{ color: coastalPalette.deep }}
+                    style={{ color: TEXT_DEEP }}
                   >
                     {eventDate.getFullYear()}
                   </p>
@@ -345,7 +524,7 @@ function EventVenueCard({
 
             <p
               className={`${cinzel.className} text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-[0.14em] uppercase ${showDateDetails ? "" : "py-2 sm:py-3"}`}
-              style={{ color: coastalPalette.deep }}
+              style={{ color: TEXT_DEEP }}
             >
               At {time}
             </p>
@@ -354,8 +533,8 @@ function EventVenueCard({
           <div
             className="rounded-xl p-3 sm:p-4 md:p-5 mb-4 sm:mb-6 border"
             style={{
-              borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 30%, white)`,
-              backgroundColor: `color-mix(in srgb, white 80%, ${coastalPalette.lavenderBlue})`,
+              borderColor: `color-mix(in srgb, ${ACCENT} 30%, white)`,
+              backgroundColor: `color-mix(in srgb, white 80%, ${MOTIF.soft})`,
             }}
           >
             <div className="flex items-start gap-2 sm:gap-3 md:gap-4">
@@ -380,8 +559,8 @@ function EventVenueCard({
                 <div
                   className="p-1.5 sm:p-2 md:p-2.5 rounded-lg border shadow-sm"
                   style={{
-                    backgroundColor: coastalPalette.cream,
-                    borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 35%, white)`,
+                    backgroundColor: MOTIF.cream,
+                    borderColor: `color-mix(in srgb, ${ACCENT} 35%, white)`,
                   }}
                 >
                   <QRCodeSVG
@@ -389,8 +568,8 @@ function EventVenueCard({
                     size={80}
                     level="M"
                     includeMargin={false}
-                    fgColor={coastalPalette.deep}
-                    bgColor={coastalPalette.cream}
+                    fgColor={TEXT_DEEP}
+                    bgColor={MOTIF.cream}
                   />
                 </div>
                 <p className={`${ct.label} font-[family-name:var(--font-crimson)] italic text-center max-w-[90px]`} style={{ color: detailText.label }}>
@@ -406,16 +585,16 @@ function EventVenueCard({
               onClick={() => onOpenMaps(mapsLink)}
               className={`${cinzel.className} flex-1 flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 md:py-3.5 rounded-full border font-semibold uppercase tracking-[0.12em] ${ct.btn} transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]`}
               style={{
-                backgroundColor: BUTTON_COLOR,
-                borderColor: coastalPalette.dustyRose,
-                color: coastalPalette.deep,
-                boxShadow: `0 6px 20px color-mix(in srgb, ${BUTTON_COLOR} 45%, transparent)`,
+                backgroundColor: ACCENT,
+                borderColor: ACCENT,
+                color: TEXT_DEEP,
+                boxShadow: "0 6px 20px rgba(217, 140, 164, 0.28)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = coastalPalette.peach
+                e.currentTarget.style.backgroundColor = MOTIF.accent
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = BUTTON_COLOR
+                e.currentTarget.style.backgroundColor = ACCENT
               }}
               aria-label={`Get directions to ${badge.toLowerCase()} venue`}
             >
@@ -427,14 +606,14 @@ function EventVenueCard({
               onClick={() => onCopy(fullVenue, copyId)}
               className={`${cinzel.className} flex-1 flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 md:py-3.5 border-2 rounded-full font-semibold uppercase tracking-[0.12em] ${ct.btn} transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]`}
               style={{
-                color: coastalPalette.deep,
-                backgroundColor: `color-mix(in srgb, white 88%, ${coastalPalette.lavenderBlue})`,
-                borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 45%, white)`,
+                color: TEXT_DEEP,
+                backgroundColor: `color-mix(in srgb, white 88%, ${MOTIF.soft})`,
+                borderColor: `color-mix(in srgb, ${ACCENT} 45%, white)`,
               }}
               aria-label={`Copy ${badge.toLowerCase()} venue address`}
             >
               {copiedItems.has(copyId) ? (
-                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" style={{ color: coastalPalette.teal }} />
+                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" style={{ color: ACCENT }} />
               ) : (
                 <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0" />
               )}
@@ -459,10 +638,10 @@ export function Details() {
   const [rotationOffset, setRotationOffset] = useState(0)
   
   const coupleImages = [
-    "/mobile-background/image.png",
-    "/mobile-background/image.png",
-    "/mobile-background/image.png",
-    "/mobile-background/image.png",
+    "/mobile-background/coupless (1).webp",
+    "/mobile-background/coupless (2).webp",
+    "/mobile-background/coupless (3).webp",
+    "/mobile-background/coupless (4).webp",
   ]
 
   const ceremonyImages = siteConfig.ceremony.image
@@ -538,39 +717,27 @@ export function Details() {
 
 
   return (
-    <div
-      className="relative w-full"
-      style={{ backgroundColor: coastalLightBg }}
-    >
+    <div className="relative isolate w-full overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
+        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{ background: sectionWash }}
+        aria-hidden
+      />
+
       <Section
         id="details"
         className="relative z-10 pt-8 pb-8 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-14 lg:pb-14 overflow-hidden"
       >
-        {/* Shell corner decorations */}
-        <div className="pointer-events-none absolute left-0 top-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/top-left-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
-        <div className="pointer-events-none absolute bottom-0 right-0 z-[1]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/decoration/right-bottom-shell-deco.png"
-            alt=""
-            className={CORNER_DECO_CLASS}
-            style={{ filter: BLUE_SHELL_FILTER }}
-          />
-        </div>
-
         {/* Header */}
         <div className="relative z-20 text-center mb-6 sm:mb-8 md:mb-10 px-6 sm:px-10 md:px-12">
           <p
             className={`${cinzel.className} text-[11px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.24em] mb-2`}
-            style={{ color: coastalPalette.dustyRose }}
+            style={{ color: ACCENT }}
           >
             Our Celebration
           </p>
@@ -579,16 +746,16 @@ export function Details() {
             style={{
               ...displayScript,
               fontSize: "clamp(2.35rem, 7.5vw, 4.25rem)",
-              color: coastalPalette.title,
+              color: NAME_COLOR,
               letterSpacing: "0.02em",
-              textShadow: coastalTitleShadow,
+              textShadow: NAME_SHADOW,
             }}
           >
             Event Details
           </h2>
           <p
             className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed px-2"
-            style={{ ...bodyFont, color: coastalPalette.body }}
+            style={{ ...bodyFont, color: TEXT }}
           >
             Everything you need to know about our special day.
           </p>
@@ -596,12 +763,12 @@ export function Details() {
           <div className="flex items-center justify-center gap-2 pt-2 sm:pt-3">
             <span
               className="h-px w-10 sm:w-16 md:w-20"
-              style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 70%, white)` }}
             />
-            <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: coastalPalette.teal }} />
+            <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: ACCENT }} />
             <span
               className="h-px w-10 sm:w-16 md:w-20"
-              style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 70%, white)` }}
             />
           </div>
         </div>
@@ -609,7 +776,7 @@ export function Details() {
       {/* Venue and Event Information */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 mb-8 sm:mb-10 md:mb-12 space-y-6 sm:space-y-10 md:space-y-14">
         <EventVenueCard
-          badge="Ceremony"
+          badge="Venue"
           images={ceremonyImages}
           activeImageIndex={currentCeremonyImageIndex}
           locationName={ceremonyVenueName}
@@ -618,7 +785,7 @@ export function Details() {
           day={siteConfig.ceremony.day}
           dateString={siteConfig.ceremony.date}
           time={siteConfig.ceremony.time}
-          venueSectionLabel="Ceremony Venue"
+          venueSectionLabel="Venue"
           mapsLink={ceremonyMapsLink}
           copyId="ceremony"
           fullVenue={ceremonyVenue}
@@ -627,7 +794,7 @@ export function Details() {
           onOpenMaps={openInMaps}
         />
 
-        <EventVenueCard
+        {/* <EventVenueCard
           badge="Reception"
           images={receptionImages}
           activeImageIndex={currentReceptionImageIndex}
@@ -645,7 +812,7 @@ export function Details() {
           copiedItems={copiedItems}
           onCopy={copyToClipboard}
           onOpenMaps={openInMaps}
-        />
+        /> */}
       </div>
 
       {/* Attire Guidelines */}
@@ -654,42 +821,63 @@ export function Details() {
           <div className="flex items-center justify-center gap-2 pt-1 sm:pt-2">
             <span
               className="h-px w-10 sm:w-16 md:w-20"
-              style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 70%, white)` }}
             />
-            <Shirt className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: coastalPalette.teal }} />
+            <Shirt className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: ACCENT }} />
             <span
               className="h-px w-10 sm:w-16 md:w-20"
-              style={{ backgroundColor: `color-mix(in srgb, ${coastalPalette.blueGray} 70%, white)` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.silver} 70%, white)` }}
             />
           </div>
           <h3
             className={`${cinzel.className} ${ct.sectionTitle} uppercase tracking-[0.2em] font-semibold leading-tight mt-3 sm:mt-4`}
-            style={{ color: coastalPalette.title }}
+            style={{ color: NAME_COLOR }}
           >
             Attire Guidelines
           </h3>
-          <p className={`${ct.bodyLg} font-normal leading-relaxed mt-3 sm:mt-4`} style={{ ...bodyFont, color: coastalPalette.body }}>
+          <p className={`${ct.bodyLg} font-normal leading-relaxed mt-3 sm:mt-4`} style={{ ...bodyFont, color: TEXT }}>
             Please dress according to the guidelines below.
           </p>
         </div>
 
         {/* Attire cards — Principal Sponsors & Guests */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 mb-6 sm:mb-8 md:mb-10">
+        <div className="mb-6 grid grid-cols-1 items-start gap-6 sm:mb-8 sm:gap-8 md:mb-10 sm:grid-cols-2 lg:grid-cols-3">
           <AttireCard
             title="Principal Sponsors"
-            image={attireGuide.principalSponsors.image}
-            alt="Principal sponsor attire"
+            image={attireGuide.sponsors.image}
+            imageAspect={attireGuide.sponsors.imageAspect}
+            alt="Bridal party attire guide"
           >
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+            <div className="grid grid-cols-1 gap-5 sm:gap-6">
               <AttirePaletteGroup
                 label="Ladies"
-                colors={attireGuide.principalSponsors.ladies.colors}
-                description={attireGuide.principalSponsors.ladies.description}
+                colors={attireGuide.sponsors.ladies.colors}
+                description={attireGuide.sponsors.ladies.description}
               />
               <AttirePaletteGroup
                 label="Gentlemen"
-                colors={attireGuide.principalSponsors.gentlemen.colors}
-                description={attireGuide.principalSponsors.gentlemen.description}
+                colors={attireGuide.sponsors.gentlemen.colors}
+                description={attireGuide.sponsors.gentlemen.description}
+              />
+            </div>
+          </AttireCard>
+
+          <AttireCard
+            title="Entourage"
+            image={attireGuide.entourage.image}
+            imageAspect={attireGuide.entourage.imageAspect}
+            alt="Entourage attire guide"
+          >
+            <div className="grid grid-cols-1 gap-5 sm:gap-6">
+              <AttirePaletteGroup
+                label="Ladies"
+                colors={attireGuide.entourage.ladies.colors}
+                description={attireGuide.entourage.ladies.description}
+              />
+              <AttirePaletteGroup
+                label="Gentlemen"
+                colors={attireGuide.entourage.gentlemen.colors}
+                description={attireGuide.entourage.gentlemen.description}
               />
             </div>
           </AttireCard>
@@ -697,10 +885,10 @@ export function Details() {
           <AttireCard
             title="Guests"
             image={attireGuide.guests.image}
-            alt="Guest attire"
-            imageClassName="object-cover object-top"
+            imageAspect={attireGuide.guests.imageAspect}
+            alt="Guests attire guide"
           >
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+            <div className="grid grid-cols-1 gap-5 sm:gap-6">
               <AttirePaletteGroup
                 label="Ladies"
                 colors={attireGuide.guests.ladies.colors}
@@ -719,7 +907,7 @@ export function Details() {
           className="mb-8 sm:mb-10 md:mb-12 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border shadow-sm"
           style={{
             ...cardStyle,
-            boxShadow: `0 8px 28px color-mix(in srgb, ${coastalPalette.teal} 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.72)`,
+            boxShadow: `0 8px 28px color-mix(in srgb, ${MOTIF.accent} 10%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.72)`,
           }}
         >
           <p className={`${cinzel.className} ${ct.label} uppercase tracking-[0.18em] text-center mb-3 sm:mb-4 font-semibold`} style={{ color: detailText.label }}>
@@ -729,7 +917,7 @@ export function Details() {
             <li className="flex gap-3 items-start">
               <span
                 className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ backgroundColor: coastalPalette.teal }}
+                style={{ backgroundColor: ACCENT }}
               />
               <p className={`${ct.body} leading-relaxed`} style={{ ...bodyFont, color: detailText.body }}>
                 Please wear comfortable footwear fit for outdoor reception.
@@ -739,95 +927,113 @@ export function Details() {
         </div>
 
         {/* Gentle Reminders */}
-        <div className="relative max-w-4xl mx-auto px-3 sm:px-5 mt-8 sm:mt-12 md:mt-16 pb-2 sm:pb-3">
+        <div
+          className="relative mx-auto mt-8 max-w-4xl overflow-hidden rounded-xl border sm:mt-10 sm:rounded-2xl md:mt-12"
+          style={{
+            ...cardStyle,
+            boxShadow: `0 12px 40px color-mix(in srgb, ${MOTIF.deep} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.9)`,
+          }}
+        >
           <div
-            className="relative overflow-hidden rounded-xl sm:rounded-2xl border backdrop-blur-lg"
-            style={cardStyle}
-          >
-          {/* Content */}
-          <div className="relative z-10 px-4 sm:px-6 md:px-8 py-6 sm:py-8 md:py-10">
-            {/* Animated couple photos carousel */}
-            <div className="flex justify-center gap-2 sm:gap-3 md:gap-4 mb-6 sm:mb-8">
-              {coupleImages.map((image, index) => {
-                const isActive = index === currentImageIndex
-                // Alternate rotation: -5deg, 5deg, -3deg, 3deg for variety
-                const baseRotation = index === 0 ? -5 : index === 1 ? 5 : index === 2 ? -3 : 3
-                // Add gentle rotation animation for active image
-                const currentRotation = isActive 
-                  ? baseRotation + Math.sin(rotationOffset * Math.PI / 180) * 2 
-                  : baseRotation
-                
-                return (
-                  <div
-                    key={index}
-                    className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 shadow-lg transition-all duration-700 ease-in-out ${
-                      isActive ? 'scale-110 z-10' : 'scale-100 opacity-70'
-                    }`}
-                    style={{
-                      transform: `rotate(${currentRotation}deg) ${isActive ? 'scale(1.1)' : 'scale(1)'}`,
-                      borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 45%, white)`,
-                    }}
-                  >
-                    <Image
-                      src={image}
-                      alt={`Wedding couple ${index + 1}`}
-                      fill
-                      className={`object-cover transition-opacity duration-500 ${
-                        isActive ? 'opacity-100' : 'opacity-70'
-                      }`}
-                      sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
-                    />
-                  </div>
-                )
-              })}
+            className="pointer-events-none absolute inset-x-0 top-0 h-56 sm:h-64"
+            style={{
+              background: `radial-gradient(ellipse 80% 100% at 50% 0%, color-mix(in srgb, ${MOTIF.lightBlush} 55%, transparent), transparent 72%)`,
+            }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-40 blur-2xl sm:h-40 sm:w-40"
+            style={{ backgroundColor: MOTIF.accent }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-10 -left-10 h-36 w-36 rounded-full opacity-30 blur-2xl sm:h-44 sm:w-44"
+            style={{ backgroundColor: MOTIF.medium }}
+            aria-hidden
+          />
+
+          <div className="relative px-5 py-7 text-center sm:px-8 sm:py-9 md:px-10 md:py-11">
+            <CoupleImagesCarousel
+              coupleImages={coupleImages}
+              currentImageIndex={currentImageIndex}
+              rotationOffset={rotationOffset}
+            />
+
+            <div className="mt-1 flex items-center justify-center gap-2 sm:gap-3">
+              <span
+                className="h-px w-12 sm:w-20 md:w-28"
+                style={{
+                  background: `linear-gradient(90deg, transparent, color-mix(in srgb, ${MOTIF.silver} 80%, white), color-mix(in srgb, ${ACCENT} 55%, white))`,
+                }}
+              />
+              <Heart
+                className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                style={{ color: ACCENT }}
+                fill={ACCENT}
+                aria-hidden
+              />
+              <span
+                className="h-px w-12 sm:w-20 md:w-28"
+                style={{
+                  background: `linear-gradient(90deg, color-mix(in srgb, ${ACCENT} 55%, white), color-mix(in srgb, ${MOTIF.silver} 80%, white), transparent)`,
+                }}
+              />
             </div>
 
-            {/* Title */}
-            <h3 className={`${cinzel.className} ${ct.noteTitle} text-center mb-6 sm:mb-8 font-normal tracking-wide`} style={{ color: detailText.accent }}>
-              GENTLE REMINDERS
+            <h3
+              className={`${cinzel.className} ${ct.sectionTitle} mt-3 font-semibold uppercase tracking-[0.18em] sm:mt-4`}
+              style={{ color: NAME_COLOR }}
+            >
+              Gentle Reminders
             </h3>
+            <p
+              className={`font-goudy-italic ${ct.body} mx-auto mt-2 max-w-xl leading-relaxed sm:mt-3 sm:max-w-2xl`}
+              style={{ ...bodyFont, color: detailText.body }}
+            >
+              A few thoughtful notes to help everyone enjoy our celebration.
+            </p>
 
-            {/* Reminders List */}
-            <div className="space-y-4 sm:space-y-5 md:space-y-6 max-w-2xl mx-auto">
-               {/* No Kinds */}
-               {/* <div className="bg-motif-cream/60 rounded-lg p-4 sm:p-5 md:p-6 border border-motif-deep/10 shadow-sm">
-                <h4 className={`${cinzel.className} ${ct.reminderHead} font-semibold mb-2 sm:mb-3`} style={{ color: detailText.heading }}>
-                Adults-Only Celebration
-                </h4>
-                <p className={`${cormorant.className} ${ct.reminderBody} leading-relaxed`} style={{ ...bodyFont, color: detailText.body }}>
-                We kindly request that our wedding be an adults-only occasion. We hope this allows everyone to relax and fully enjoy the celebration with us.
+            <div className="mx-auto mt-6 max-w-3xl text-left sm:mt-8 md:max-w-[42rem]">
+              <ReminderCard title="Adults-Only Celebration" variant="accent">
+                <p>
+                  We kindly request that our wedding be an adults-only occasion. We hope this allows
+                  everyone to relax and fully enjoy the celebration with us.
                 </p>
-              </div> */}
-              {/* Unplugged Ceremony Reminder */}
-              <div
-                className="rounded-lg p-4 sm:p-5 md:p-6 border shadow-sm"
-                style={{
-                  borderColor: `color-mix(in srgb, ${coastalPalette.dustyRose} 30%, white)`,
-                  backgroundColor: `color-mix(in srgb, white 82%, ${coastalPalette.lavenderBlue})`,
-                }}
-              >
-                <h4 className={`${cinzel.className} ${ct.reminderHead} font-semibold mb-2 sm:mb-3`} style={{ color: detailText.heading }}>
-                Unplugged Ceremony
+              </ReminderCard>
 
-                </h4>
-                <p className={`${cormorant.className} ${ct.reminderBody} leading-relaxed`} style={{ ...bodyFont, color: detailText.body }}>
-                We&apos;re having a mostly unplugged ceremony. Guests may take photos, but we kindly ask that it be kept minimal. Please avoid blocking or crowding our official photographers so they can capture the special moments. We&apos;d love for everyone to stay present and share the moment with us. Don&apos;t worry—professional photos will be shared with you after the event. Thank you for your understanding 
+              <ReminderCard title="Unplugged Ceremony">
+                <p>
+                  We&apos;re having a mostly unplugged ceremony. Guests may take photos, but we kindly
+                  ask that it be kept minimal. Please avoid blocking or crowding our official
+                  photographers so they can capture the special moments. We&apos;d love for everyone
+                  to stay present and share the moment with us. Don&apos;t worry—professional photos
+                  will be shared with you after the event. Thank you for your understanding.
                 </p>
-              </div>
+              </ReminderCard>
 
-              {/* Arrival Reminder */}
-              {/* <div className="bg-motif-cream/60 rounded-lg p-4 sm:p-5 md:p-6 border border-motif-deep/10 shadow-sm">
-                <h4 className={`${cinzel.className} ${ct.reminderHead} font-semibold mb-2 sm:mb-3`} style={{ color: detailText.heading }}>
-                Arrival
-                </h4>
-                <p className={`${cormorant.className} ${ct.reminderBody} leading-relaxed`} style={{ ...bodyFont, color: detailText.body }}>
-                To ensure everything runs smoothly, please arrive at least 30 minutes before the ceremony starts. The program will begin at {siteConfig.ceremony.time}, so we kindly ask everyone to arrive by {siteConfig.ceremony.guestsTime} minutes. This will give you time to find your seat, take in the beautiful setup, and be fully present for our special moment
+              <ReminderCard title="Strictly Formal" variant="accent">
+                <div className="space-y-2.5">
+                  <p>
+                    Kindly follow our suggested attire and color palette above to match our wedding
+                    theme.
+                  </p>
+                  <ColorPalette colors={attireGuide.guests.ladies.colors} />
+                  <p>Strictly no casual clothes, shoes, or white-colored attire.</p>
+                </div>
+              </ReminderCard>
+
+              <ReminderCard title="Arrival" isLast>
+                <p>
+                  To ensure everything runs smoothly, please arrive at least 30 minutes before the
+                  ceremony starts. The program will begin at {siteConfig.ceremony.time}, so we kindly
+                  ask everyone to arrive by {siteConfig.ceremony.guestsTime}. This will give you time
+                  to find your seat, take in the beautiful setup, and be fully present for our special
+                  moment.
                 </p>
-              </div> */}
+              </ReminderCard>
             </div>
           </div>
         </div>
-      </div>
 
       {/* Enhanced Image Modal */}
       {showImageModal && (
