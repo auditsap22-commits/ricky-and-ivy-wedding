@@ -57,13 +57,13 @@ const ct = {
 const containerStyle = {
   background: `linear-gradient(
     155deg,
-    color-mix(in srgb, ${MOTIF.cream} 96%, white) 0%,
-    color-mix(in srgb, ${MOTIF.soft} 92%, white) 42%,
-    color-mix(in srgb, ${MOTIF.lightBlush} 88%, white) 78%,
-    color-mix(in srgb, ${MOTIF.medium} 82%, white) 100%
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
   )`,
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
-  boxShadow: `0 20px 56px color-mix(in srgb, ${MOTIF.deep} 11%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.9)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 const formCardStyle = containerStyle
@@ -160,7 +160,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
       `}</style>
 
       <Card
-        className={`relative w-full border backdrop-blur-md transition-all duration-500 overflow-hidden rounded-2xl ${
+        className={`relative w-full border transition-all duration-500 overflow-hidden rounded-2xl ${
           isFocused ? "scale-[1.01]" : ""
         } ${isSubmitted ? "animate-bounce" : ""}`}
         style={formCardStyle}
@@ -168,7 +168,7 @@ function MessageForm({ onSuccess, onMessageSent }: MessageFormProps) {
         {isSubmitted && (
           <div
             className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
-            style={{ backgroundColor: `color-mix(in srgb, ${MOTIF.soft} 92%, white)` }}
+            style={{ backgroundColor: MOTIF.soft }}
           >
             <p
               className={`${cinzel.className} font-semibold ${ct.formTitle}`}

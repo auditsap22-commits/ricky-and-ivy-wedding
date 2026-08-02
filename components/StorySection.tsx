@@ -16,8 +16,6 @@ const MOTIF = {
 const TEXT_DEEP = "#4A3540"
 const TITLE_DEEP = MOTIF.deep
 
-const sectionBg = MOTIF.soft
-
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: "400",
@@ -28,7 +26,7 @@ const bodyFont: React.CSSProperties = {
 }
 
 const imageFrameStyle = {
-  background: `color-mix(in srgb, ${MOTIF.cream} 95%, white)`,
+  background: MOTIF.cream,
   border: `1px solid color-mix(in srgb, ${MOTIF.silver} 65%, white)`,
   boxShadow: `0 8px 24px color-mix(in srgb, ${MOTIF.deep} 12%, transparent)`,
 } as const
@@ -72,10 +70,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
   const flexDirection = layout === "image-left" ? "flex-row" : "flex-row-reverse"
 
   return (
-    <div
-      className="relative"
-      style={{ backgroundColor: sectionBg }}
-    >
+    <div className="relative">
       <div
         ref={sectionRef}
         className={`container mx-auto px-2 md:px-12 py-12 md:py-32 relative z-10 transition-all duration-1000 ease-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"} ${isFirst ? "pt-16 md:pt-36" : ""} ${isLast ? "pb-16 md:pb-36" : ""}`}

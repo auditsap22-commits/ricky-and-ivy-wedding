@@ -42,13 +42,13 @@ const ct = {
 const messageCardStyle = {
   background: `linear-gradient(
     155deg,
-    color-mix(in srgb, ${MOTIF.cream} 96%, white) 0%,
-    color-mix(in srgb, ${MOTIF.soft} 92%, white) 42%,
-    color-mix(in srgb, ${MOTIF.lightBlush} 88%, white) 78%,
-    color-mix(in srgb, ${MOTIF.medium} 82%, white) 100%
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
   )`,
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
-  boxShadow: `0 20px 56px color-mix(in srgb, ${MOTIF.deep} 11%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.9)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 interface Message {
@@ -143,7 +143,7 @@ export default function MessageWallDisplay({ messages, loading }: MessageWallDis
               style={{
                 ...bodyFont,
                 color: TEXT_DEEP,
-                backgroundColor: `color-mix(in srgb, ${MOTIF.soft} 85%, white)`,
+                backgroundColor: MOTIF.soft,
                 borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
               }}
             >

@@ -19,14 +19,13 @@ const TEXT_DEEP = "#4A3540"
 const TITLE_DEEP = MOTIF.deep
 const ACCENT = MOTIF.deep
 
-const BACKGROUND_IMAGE = "/Details/background.png"
-
-const sectionWash = `linear-gradient(
-  180deg,
-  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
-  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
-  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
-), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+const sectionBackground = `linear-gradient(
+  155deg,
+  #FFFFFF 0%,
+  ${MOTIF.cream} 38%,
+  ${MOTIF.soft} 72%,
+  ${MOTIF.lightBlush} 100%
+)`
 
 const displayScript = {
   fontFamily: "'Brightwall', cursive",
@@ -46,13 +45,8 @@ export function LoveStory() {
   return (
     <div id="love-story" className="relative isolate w-full overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
-        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: sectionWash }}
+        style={{ background: sectionBackground }}
         aria-hidden
       />
 
@@ -105,18 +99,10 @@ export function LoveStory() {
           title="Where It All Began"
           imageSrc="/mobile-background/coupless (12).webp"
           text={
-            <p className="mb-4">
-              Back in 2015, we were just two people sharing the same office space—Ricky working, and Ivy finishing her college OJT. What started as simple, everyday conversations turned into a quiet, beautiful connection.
-            </p>
-          }
-        />
-
-        <StorySection
-          layout="image-right"
-          title="Faith & Our Journey"
-          imageSrc="/mobile-background/coupless (9).webp"
-          text={
             <>
+              <p className="mb-4">
+                Back in 2015, we were just two people sharing the same office space—Ricky working, and Ivy finishing her college OJT. What started as simple, everyday conversations turned into a quiet, beautiful connection.
+              </p>
               <p className="mb-4">
                 When Ivy graduated a year later, our hearts were already sure, and we officially began our journey together. But among all the moments we shared during those courting days, the most precious was when Ricky shared his faith in God with Ivy. That moment didn&apos;t just change our relationship; it anchor-rooted our lives.
               </p>
@@ -128,25 +114,19 @@ export function LoveStory() {
         />
 
         <StorySection
-          layout="image-left"
-          title="Growing Together"
-          imageSrc="/mobile-background/coupless (3).webp"
-          text={
-            <p className="mb-4">
-              Through every season since—building careers side-by-side in the life insurance business, supporting each other&apos;s biggest dreams, and learning what true partnership really means—we&apos;ve grown closer with every step.
-            </p>
-          }
-        />
-
-        <StorySection
           layout="image-right"
           isLast={true}
           title="Ready for Forever"
           imageSrc="/mobile-background/coupless (13).webp"
           text={
-            <p className="mb-4">
-              Now, with full hearts and God&apos;s grace leading the way, we&apos;re ready to start our forever.
-            </p>
+            <>
+              <p className="mb-4">
+                Through every season since—building careers side-by-side in the life insurance business, supporting each other&apos;s biggest dreams, and learning what true partnership really means—we&apos;ve grown closer with every step.
+              </p>
+              <p className="mb-4">
+                Now, with full hearts and God&apos;s grace leading the way, we&apos;re ready to start our forever.
+              </p>
+            </>
           }
         />
         {/* <div className="relative z-0 px-4 pb-16 pt-8 text-center sm:pb-20 sm:pt-10 md:pb-24 md:pt-12">

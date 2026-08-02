@@ -25,14 +25,13 @@ const NAME_COLOR = "#C97A94"
 const NAME_SHADOW =
   "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
-const BACKGROUND_IMAGE = "/Details/background.png"
-
-const sectionWash = `linear-gradient(
-  180deg,
-  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
-  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
-  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
-), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+const sectionBackground = `linear-gradient(
+  155deg,
+  #FFFFFF 0%,
+  ${MOTIF.cream} 38%,
+  ${MOTIF.soft} 72%,
+  ${MOTIF.lightBlush} 100%
+)`
 
 const displayScript = {
   fontFamily: "'Brightwall', cursive",
@@ -75,14 +74,20 @@ function principalSponsorFromApi(row: Record<string, unknown>): PrincipalSponsor
   }
 }
 
-const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+const cardStyle = {
+  background: `linear-gradient(
+    155deg,
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
+  )`,
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
-  boxShadow: `0 28px 72px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 12px 32px color-mix(in srgb, ${MOTIF.silver} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
-const glassAmbientGlowStyle = {
-  background: `linear-gradient(135deg, color-mix(in srgb, ${MOTIF.silver} 32%, transparent) 0%, color-mix(in srgb, ${MOTIF.accent} 22%, transparent) 48%, color-mix(in srgb, ${MOTIF.deep} 18%, transparent) 100%)`,
+const cardAmbientGlowStyle = {
+  background: `linear-gradient(135deg, ${MOTIF.soft} 0%, ${MOTIF.lightBlush} 48%, ${MOTIF.medium} 100%)`,
 } as const
 
 const dividerLineStyle = {
@@ -204,15 +209,6 @@ function normalizeRoleCategory(category: string): string {
   const alias = honorAliases[normalized.toLowerCase()]
   if (alias) return alias
   return normalized
-}
-
-/** Title case per word; uses Unicode letters so ñe → Ñe (not ñE from ASCII-only `/\b\w/g`). */
-function toTitleCaseDisplayName(name: string): string {
-  const lower = name.toLocaleLowerCase("es")
-  return lower.replace(
-    /(^|[\s'\-])(\p{L})/gu,
-    (_, sep: string, letter: string) => sep + letter.toLocaleUpperCase("es")
-  )
 }
 
 export function Entourage() {
@@ -361,7 +357,6 @@ export function Entourage() {
       align === "right" ? "items-end" : align === "left" ? "items-start" : "items-center"
     const textAlign =
       align === "right" ? "text-right" : align === "left" ? "text-left" : "text-center"
-    const displayName = toTitleCaseDisplayName(member.name)
     return (
       <div
         className={`relative flex flex-col ${containerAlign} justify-center py-0.5 sm:py-1 min-w-0 w-full max-w-full group/item transition-all duration-300`}
@@ -373,9 +368,9 @@ export function Entourage() {
         <p
           className={`relative font-medium ${textAlign} transition-all duration-300 whitespace-nowrap max-w-full overflow-hidden text-ellipsis`}
           style={{ ...nameStyle, color: palette.heading }}
-          title={displayName}
+          title={member.name}
         >
-          {displayName}
+          {member.name}
         </p>
         {showRole && member.roleTitle && (
           <p
@@ -435,13 +430,8 @@ export function Entourage() {
   return (
     <div className="relative isolate w-full overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
-        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: sectionWash }}
+        style={{ background: sectionBackground }}
         aria-hidden
       />
 
@@ -496,24 +486,13 @@ export function Entourage() {
         <div className="relative">
           <div
             className="pointer-events-none absolute -inset-1 rounded-2xl opacity-50 blur-2xl sm:-inset-2"
-            style={glassAmbientGlowStyle}
+            style={cardAmbientGlowStyle}
             aria-hidden
           />
           <div
-            className="relative z-20 rounded-xl sm:rounded-2xl overflow-hidden border backdrop-blur-xl sm:backdrop-blur-2xl transition-all duration-500"
-            style={glassCardStyle}
+            className="relative z-20 rounded-xl sm:rounded-2xl overflow-hidden border transition-all duration-500"
+            style={cardStyle}
           >
-            <div
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background: `linear-gradient(to top, color-mix(in srgb, ${MOTIF.silver} 10%, transparent), transparent 45%)`,
-              }}
-              aria-hidden
-            />
             <div
               className="pointer-events-none absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/35"
               aria-hidden

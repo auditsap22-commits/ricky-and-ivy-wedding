@@ -26,14 +26,13 @@ const NAME_COLOR = "#C97A94"
 const NAME_SHADOW =
   "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
-const BACKGROUND_IMAGE = "/Details/background.png"
-
-const sectionWash = `linear-gradient(
-  180deg,
-  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
-  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
-  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
-), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+const sectionBackground = `linear-gradient(
+  155deg,
+  #FFFFFF 0%,
+  ${MOTIF.cream} 38%,
+  ${MOTIF.soft} 72%,
+  ${MOTIF.lightBlush} 100%
+)`
 
 const displayScript = {
   fontFamily: "'Brightwall', cursive",
@@ -79,12 +78,18 @@ const toTitleCase = (str: string) =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ")
 
-const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+const cardStyle = {
+  background: `linear-gradient(
+    155deg,
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
+  )`,
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: `color-mix(in srgb, white 72%, ${MOTIF.silver})`,
-  boxShadow: `0 20px 48px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 8px 24px color-mix(in srgb, ${MOTIF.silver} 14%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
+  borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
 function FooterCard({
@@ -96,13 +101,9 @@ function FooterCard({
 }) {
   return (
     <div
-      className={`relative w-full min-w-0 rounded-xl sm:rounded-2xl backdrop-blur-xl sm:backdrop-blur-2xl p-4 sm:p-5 md:p-6 transition-all duration-300 hover:shadow-xl ${className}`}
-      style={glassCardStyle}
+      className={`relative w-full min-w-0 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 transition-all duration-300 hover:shadow-xl ${className}`}
+      style={cardStyle}
     >
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/35 via-white/8 to-transparent"
-        aria-hidden
-      />
       <div className="relative z-[1] min-w-0">{children}</div>
     </div>
   )
@@ -204,13 +205,8 @@ export function Footer() {
   return (
     <div className="relative isolate w-full overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
-        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: sectionWash }}
+        style={{ background: sectionBackground }}
         aria-hidden
       />
 
@@ -402,7 +398,7 @@ export function Footer() {
                         borderWidth: "1px",
                         borderStyle: "solid",
                         borderColor: `color-mix(in srgb, white 65%, ${MOTIF.silver})`,
-                        backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 45%, transparent)`,
+                        backgroundColor: "#FFFFFF",
                         color: ACCENT,
                         boxShadow: `0 4px 12px color-mix(in srgb, ${MOTIF.silver} 12%, transparent)`,
                       }}

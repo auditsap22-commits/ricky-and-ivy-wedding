@@ -40,9 +40,10 @@ const displayScript = {
 const cardStyle = {
   background: `linear-gradient(
     155deg,
-    color-mix(in srgb, ${MOTIF.cream} 94%, white) 0%,
-    color-mix(in srgb, ${MOTIF.soft} 92%, white) 48%,
-    color-mix(in srgb, ${MOTIF.lightBlush} 88%, white) 100%
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
   )`,
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
   boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
@@ -153,7 +154,7 @@ export function Welcome() {
                   className="mx-auto max-w-md rounded-xl px-4 py-4 sm:rounded-2xl sm:px-6 sm:py-5"
                   style={{
                     border: `1px solid color-mix(in srgb, ${MOTIF.silver} 68%, white)`,
-                    backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 78%, white)`,
+                    backgroundColor: MOTIF.cream,
                   }}
                 >
                   <p

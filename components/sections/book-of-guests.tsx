@@ -24,14 +24,13 @@ const NAME_COLOR = "#C97A94"
 const NAME_SHADOW =
   "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
-const BACKGROUND_IMAGE = "/Details/background.png"
-
-const sectionWash = `linear-gradient(
-  180deg,
-  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
-  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
-  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
-), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+const sectionBackground = `linear-gradient(
+  155deg,
+  #FFFFFF 0%,
+  ${MOTIF.cream} 38%,
+  ${MOTIF.soft} 72%,
+  ${MOTIF.lightBlush} 100%
+)`
 
 const displayScript = {
   fontFamily: "'Brightwall', cursive",
@@ -65,19 +64,25 @@ const ct = {
   meta: "text-[10px] sm:text-xs md:text-sm",
 } as const
 
-const glassCardStyle = {
-  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 42%, transparent)`,
+const cardStyle = {
+  background: `linear-gradient(
+    155deg,
+    #FFFFFF 0%,
+    ${MOTIF.cream} 38%,
+    ${MOTIF.soft} 72%,
+    ${MOTIF.lightBlush} 100%
+  )`,
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 72%, white)`,
-  boxShadow: `0 28px 72px color-mix(in srgb, ${MOTIF.deep} 10%, transparent), 0 12px 32px color-mix(in srgb, ${MOTIF.silver} 16%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88), inset 0 -1px 0 rgba(255, 255, 255, 0.12)`,
+  boxShadow: `0 16px 48px color-mix(in srgb, ${MOTIF.deep} 12%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
-const glassAmbientGlowStyle = {
-  background: `linear-gradient(135deg, color-mix(in srgb, ${MOTIF.silver} 32%, transparent) 0%, color-mix(in srgb, ${MOTIF.accent} 22%, transparent) 48%, color-mix(in srgb, ${MOTIF.deep} 18%, transparent) 100%)`,
+const cardAmbientGlowStyle = {
+  background: `linear-gradient(135deg, ${MOTIF.soft} 0%, ${MOTIF.lightBlush} 48%, ${MOTIF.medium} 100%)`,
 } as const
 
 const refreshButtonStyle = {
   borderColor: `color-mix(in srgb, ${MOTIF.silver} 75%, white)`,
-  backgroundColor: `color-mix(in srgb, ${MOTIF.cream} 55%, transparent)`,
+  backgroundColor: MOTIF.cream,
   boxShadow: `0 4px 14px color-mix(in srgb, ${MOTIF.silver} 18%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88)`,
 } as const
 
@@ -247,13 +252,8 @@ export function BookOfGuests() {
   return (
     <div className="relative isolate w-full overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
-        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: sectionWash }}
+        style={{ background: sectionBackground }}
         aria-hidden
       />
 
@@ -302,14 +302,13 @@ export function BookOfGuests() {
           <div className="relative max-w-3xl mx-auto z-20">
             <div
               className="pointer-events-none absolute -inset-1 rounded-2xl opacity-50 blur-2xl sm:-inset-2"
-              style={glassAmbientGlowStyle}
+              style={cardAmbientGlowStyle}
               aria-hidden
             />
             <div
-              className="relative z-20 rounded-xl sm:rounded-2xl border backdrop-blur-xl sm:backdrop-blur-2xl transition-all duration-300 overflow-hidden"
-              style={glassCardStyle}
+              className="relative z-20 rounded-xl sm:rounded-2xl border transition-all duration-300 overflow-hidden"
+              style={cardStyle}
             >
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent" aria-hidden />
               <div
                 className="pointer-events-none absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/35"
                 aria-hidden
@@ -422,9 +421,9 @@ export function BookOfGuests() {
                 {getVisibleGuests().map((guest, index) => (
                   <div
                     key={`${guest.id}-${currentIndex}-${index}`}
-                    className={`relative z-20 group rounded-xl sm:rounded-2xl p-3.5 sm:p-4 md:p-5 transition-all duration-300 border backdrop-blur-xl overflow-hidden hover:shadow-xl ${justEntered ? "animate-guest-roll-in" : ""}`}
+                    className={`relative z-20 group rounded-xl sm:rounded-2xl p-3.5 sm:p-4 md:p-5 transition-all duration-300 border overflow-hidden hover:shadow-xl ${justEntered ? "animate-guest-roll-in" : ""}`}
                     style={{
-                      ...glassCardStyle,
+                      ...cardStyle,
                       ...(justEntered
                         ? {
                             animationDelay: `${index * 120}ms`,
@@ -607,7 +606,7 @@ export function BookOfGuests() {
 
         {confirmedGuests.length === 0 && !isRefreshing && (
           <div className="relative z-20 max-w-xl mx-auto text-center px-4">
-            <div className="rounded-xl sm:rounded-2xl border backdrop-blur-xl px-6 py-10 sm:py-12" style={glassCardStyle}>
+            <div className="rounded-xl sm:rounded-2xl border px-6 py-10 sm:py-12" style={cardStyle}>
               <p className={`${cinzel.className} ${ct.bodyLg} font-semibold mb-2`} style={{ color: palette.heading }}>
                 Guest list updating
               </p>

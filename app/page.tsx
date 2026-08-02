@@ -89,25 +89,26 @@ export default function Home() {
               {/* Spacer so content starts below fixed navbar (h-12 sm:h-14 md:h-16) */}
               {appState === AppState.DETAILS && <div className="h-12 sm:h-14 md:h-16" aria-hidden />}
               <MainHero visible={appState === AppState.DETAILS} />
-              <Welcome />
+              <Welcome /> {/* 1stpage */}
                {/* <CoupleVideo />  */}
-              <LoveStory />
-              <Countdown />
-              <Gallery />
-              <VideoMessage />
-              <Messages />
-              <Details />
+              <LoveStory />   {/* 2nd page */}
+              <Countdown /> {/* 3nd page */}
+              <Gallery /> {/* 4th page */}
+
+              <Details /> {/* 5th and 6th page */}
+              <Registry /> {/* 7th page */}
+              <Entourage /> {/* 8th page */}
+              <GuestList />
+              <BookOfGuests /> {/* 9th page */}
+              <WeddingTimeline /> {/* 10th page */}
+
               <WeddingPlaylist />
               {/* <Accommodation /> */}
               {/* <GuestInformation /> */}
-              <Entourage />
-              <GuestList />
-              <BookOfGuests />
-              <WeddingTimeline />
               {/* <PrincipalSponsors /> */}
-
               <FAQ />
-              <Registry />
+              <VideoMessage />
+              <Messages />
               {/* <SnapShare /> */}
               <Footer />
             </div>

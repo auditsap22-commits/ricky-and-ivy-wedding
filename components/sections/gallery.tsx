@@ -26,14 +26,13 @@ const NAME_COLOR = "#C97A94"
 const NAME_SHADOW =
   "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
-const BACKGROUND_IMAGE = "/Details/background.png"
-
-const sectionWash = `linear-gradient(
-  180deg,
-  color-mix(in srgb, ${MOTIF.cream} 93%, transparent) 0%,
-  color-mix(in srgb, ${MOTIF.soft} 88%, transparent) 45%,
-  color-mix(in srgb, ${MOTIF.lightBlush} 84%, transparent) 100%
-), radial-gradient(ellipse at center, rgba(255,248,248,0.62) 0%, rgba(251,236,239,0.48) 48%, rgba(232,174,190,0.32) 100%)`
+const sectionBackground = `linear-gradient(
+  155deg,
+  #FFFFFF 0%,
+  ${MOTIF.cream} 38%,
+  ${MOTIF.soft} 72%,
+  ${MOTIF.lightBlush} 100%
+)`
 
 const displayScript = {
   fontFamily: "'Brightwall', cursive",
@@ -153,13 +152,8 @@ export function Gallery() {
   return (
     <div className="relative isolate w-full overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.22]"
-        style={{ backgroundImage: `url('${BACKGROUND_IMAGE}')` }}
-        aria-hidden
-      />
-      <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: sectionWash }}
+        style={{ background: sectionBackground }}
         aria-hidden
       />
 
