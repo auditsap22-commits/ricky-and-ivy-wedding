@@ -142,6 +142,7 @@ function mapStaticEntourage(): EntourageMember[] {
     "Ring Bearer": "Ring Bearer",
     "Coin Bearer": "Coin Bearer",
     "Bible Bearer": "Bible Bearer",
+    "Flag Bearer": "Flag Bearer",
   }
   return staticEntourage.map(({ role, name, group }) => {
     let category = roleToCategory[role] ?? (role.endsWith("s") ? role : role + "s")
@@ -183,6 +184,7 @@ const ROLE_CATEGORY_ORDER = [
   "Ring Bearer",
   "Bible Bearer",
   "Coin Bearer",
+  "Flag Bearer",
   "Flower Girls",
 ]
 
@@ -197,17 +199,13 @@ const HIDDEN_ROLE_CATEGORIES = new Set<string>([])
 
 function normalizeRoleCategory(category: string): string {
   const normalized = category.trim()
-  if (normalized.toLowerCase() === "officiating minister") {
-    return "OFFICIATING MINISTER"
-  }
-  const honorAliases: Record<string, string> = {
-    "man of honor": "Man of Honor",
-    "best man": "Best Man",
-    "maid of honor": "Maid of Honor",
-    "matron of honor": "Matron of Honor",
-  }
-  const alias = honorAliases[normalized.toLowerCase()]
-  if (alias) return alias
+  if (!normalized) return normalized
+
+  const fromOrder = ROLE_CATEGORY_ORDER.find(
+    (c) => c.toLowerCase() === normalized.toLowerCase()
+  )
+  if (fromOrder) return fromOrder
+
   return normalized
 }
 
@@ -967,6 +965,7 @@ export function Entourage() {
                           "Maid of Honor",
                           "Ring Bearer",
                           "Coin Bearer",
+                          "Flag Bearer",
                           "Bible Bearer",
                           "Flower Girls",
                           "Presider",
