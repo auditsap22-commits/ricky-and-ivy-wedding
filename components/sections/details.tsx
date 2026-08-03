@@ -38,6 +38,9 @@ const NAME_COLOR = "#C97A94"
 const NAME_SHADOW =
   "0 2px 4px rgba(255, 255, 255, 0.92), 0 0 20px rgba(232, 174, 190, 0.45)"
 
+const IMAGE_LABEL_SHADOW =
+  `0 1px 3px rgba(217, 140, 164, 0.95), 0 2px 8px rgba(217, 140, 164, 0.85), 0 0 2px #CD857D, 0 0 4px #CD857D, 1px 1px 0 #CD857D, -1px -1px 0 #CD857D, 1px -1px 0 #CD857D, -1px 1px 0 #CD857D, 0 2px 12px rgba(205, 133, 125, 1), 0 4px 24px rgba(205, 133, 125, 0.95), 0 0 48px rgba(205, 133, 125, 0.75)`
+
 const sectionBackground = `linear-gradient(
   155deg,
   #FFFFFF 0%,
@@ -424,15 +427,31 @@ function AttireCard({
             className={`${imageClassName} transition-transform duration-700 group-hover:scale-[1.02]`}
             sizes="(max-width: 1024px) 100vw, 1024px"
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#2a2520]/72 via-[#2a2520]/35 to-transparent px-5 pb-5 pt-16 sm:px-8 sm:pb-6 sm:pt-20">
+          <div
+            className="absolute inset-x-0 bottom-0 px-5 pb-5 pt-20 sm:px-8 sm:pb-6 sm:pt-24"
+            style={{
+              background: `linear-gradient(to top, color-mix(in srgb, ${MOTIF.deep} 92%, transparent), color-mix(in srgb, ${MOTIF.deep} 65%, transparent), transparent)`,
+            }}
+          >
             <div className="mx-auto flex max-w-lg flex-col items-center gap-2">
-              <div className="h-px w-12 bg-white/40 sm:w-16" />
-              <h4
-                className={`${cinzel.className} ${ct.attireCardTitle} text-center uppercase tracking-[0.22em] font-semibold leading-tight text-white drop-shadow-sm`}
+              <div className="h-px w-12 bg-white/50 sm:w-16" />
+              <div
+                className="rounded-lg px-4 py-2 sm:px-5 sm:py-2.5"
+                style={{
+                  backgroundColor: `color-mix(in srgb, ${MOTIF.deep} 62%, transparent)`,
+                  backdropFilter: "blur(6px)",
+                  WebkitBackdropFilter: "blur(6px)",
+                  boxShadow: `0 4px 20px color-mix(in srgb, ${MOTIF.deep} 35%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.12)`,
+                }}
               >
-                {title}
-              </h4>
-              <div className="h-px w-12 bg-white/40 sm:w-16" />
+                <h4
+                  className={`${cinzel.className} ${ct.attireCardTitle} text-center uppercase tracking-[0.22em] font-bold leading-tight text-white`}
+                  style={{ textShadow: IMAGE_LABEL_SHADOW }}
+                >
+                  {title}
+                </h4>
+              </div>
+              <div className="h-px w-12 bg-white/50 sm:w-16" />
             </div>
           </div>
         </div>

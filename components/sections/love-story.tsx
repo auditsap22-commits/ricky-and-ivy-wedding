@@ -97,7 +97,7 @@ export function LoveStory() {
           layout="image-left"
           isFirst={true}
           title="Where It All Began"
-          imageSrc="/mobile-background/coupless (12).webp"
+          imageSrc="/envelope/image.png"
           text={
             <>
               <p className="mb-4">
