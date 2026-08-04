@@ -967,7 +967,7 @@ export function Details() {
           </AttireCard>
         </div>
 
-        <div
+        {/* <div
           className="mb-8 sm:mb-10 md:mb-12 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border shadow-sm"
           style={{
             ...cardStyle,
@@ -988,7 +988,7 @@ export function Details() {
               </p>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Gentle Reminders */}
         <div

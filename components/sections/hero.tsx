@@ -365,7 +365,7 @@ export function Hero({ visible = false }: HeroProps) {
             >
               joyfully invite you to share in the happiness of our wedding day as we promise a
               lifetime of love, faith, and devotion before God and the people dearest to our hearts
-              in the Sacrament of Matrimony
+              in the Holy Union, a Sacred Covenant
             </p>
           </div>
 
