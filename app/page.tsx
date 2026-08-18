@@ -99,7 +99,7 @@ export default function Home() {
               <Registry /> {/* 7th page */}
               <Entourage /> {/* 8th page */}
               <GuestList />
-              <BookOfGuests /> {/* 9th page */}
+              <BookOfGuests /> 
               <WeddingTimeline /> {/* 10th page */}
 
               <WeddingPlaylist />

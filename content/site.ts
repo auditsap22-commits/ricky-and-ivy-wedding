@@ -40,8 +40,8 @@ export const siteConfig = {
   },
   details: {
     rsvp: {
-      deadline: "August 10, 2026",
-      coordinator: "to be announced",
+      deadline: "August 20, 2026",
+      coordinator: "Fely Ybanez",
       phone: "​",
     },
   },

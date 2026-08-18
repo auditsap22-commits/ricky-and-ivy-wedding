@@ -331,7 +331,7 @@ export function BookOfGuests() {
                 />
               </button>
 
-              <div className="relative z-[1] px-6 sm:px-10 md:px-12 py-5 sm:py-6 md:py-8 text-center">
+              {/* <div className="relative z-[1] px-6 sm:px-10 md:px-12 py-5 sm:py-6 md:py-8 text-center">
                 <p
                   className={`${cinzel.className} ${ct.label} uppercase tracking-[0.2em] font-semibold mb-3 sm:mb-4`}
                   style={{ color: palette.label }}
@@ -387,7 +387,7 @@ export function BookOfGuests() {
                 <p className={`${cinzel.className} ${ct.meta} mt-3 sm:mt-4 uppercase tracking-[0.14em] opacity-70`} style={{ color: palette.body }}>
                   Updated {formatLastUpdate(lastUpdate)}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
